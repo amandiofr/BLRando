@@ -1,0 +1,68 @@
+html, body { margin: 0; width: 100%; height: 100%; background: #000; color: #fff;
+             font-family: sans-serif; overflow: hidden; }
+
+#map { position: fixed; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover;
+       transform-origin: 50% 50%; will-change: transform; }
+
+/* North marker: a ring the size of the screen, turned so its top points to north */
+#northRing { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; will-change: transform; z-index: 5; }
+#northMark { position: absolute; top: 3px; left: 50%; width: 34px; height: 45px; margin-left: -17px; }
+
+#hiker { position: fixed; left: 50%; top: 50%; width: 40px; height: 44px;
+         margin: -24px 0 0 -20px; transform-origin: 20px 24px; display: none; }
+
+#hikerDot { position: fixed; left: 50%; top: 50%; width: 22px; height: 22px; margin: -14px 0 0 -14px;
+            border-radius: 50%; background: #F0843A; border: 3px solid #fff; box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+            display: none; }
+
+/* Text bands over the map, darkened so they stay readable */
+.band { position: fixed; left: 0; width: 100%; text-align: center; font-weight: bold;
+        text-shadow: 0 0 4px #000; background: rgba(0, 0, 0, 0.55); }
+#top { top: 0; padding: 22px 0 6px; font-size: 28px; }
+#bottom { bottom: 0; padding: 6px 0 26px; font-size: 24px; display: none; }
+
+#rec { display: none; width: 14px; height: 14px; border-radius: 50%; background: #FF3B30;
+       margin-right: 8px; vertical-align: 2px; animation: blink 1.8s infinite; }
+@keyframes blink { 50% { opacity: 0.25; } }
+
+/* Off track: thick red ring around the round screen */
+#offRing { position: fixed; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50%; border: 12px solid #D32F2F;
+           box-sizing: border-box; display: none; animation: pulse 1.2s infinite; }
+@keyframes pulse { 50% { border-color: rgba(211, 47, 47, 0.35); } }
+#offText { position: fixed; top: 74px; left: 50%; transform: translateX(-50%);
+           background: #D32F2F; padding: 4px 14px; border-radius: 16px;
+           font-size: 22px; font-weight: bold; display: none; }
+
+#zoomTip { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+           background: rgba(0, 0, 0, 0.7); padding: 8px 18px; border-radius: 20px;
+           font-size: 26px; display: none; }
+
+#status { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+          width: 250px; text-align: center; font-size: 22px; font-weight: bold; color: #fff;
+          background: rgba(0, 0, 0, 0.8); padding: 12px; border-radius: 18px; z-index: 6; }
+
+/* Menu: graphic buttons like the phone app (screen 360 x 360) */
+#menu { position: fixed; top: 0; left: 0; right: 0; bottom: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.6);
+        z-index: 10; display: none; }
+#menu svg { width: 54px; height: 54px; display: block; }
+#menu .mtitle { position: absolute; top: 26px; left: 70px; right: 70px; text-align: center; white-space: pre-line;
+                font-size: 19px; font-weight: bold; color: #fff; text-shadow: 0 0 4px #000; }
+/* Waiting for confirmation: big yellow question at the top, hint at the bottom */
+#menu .mtitle.armed { color: #FFD54F; font-size: 27px; line-height: 1.15; top: 18px; left: 60px; right: 60px;
+                      padding: 4px 0; border-radius: 18px; background: rgba(0, 0, 0, 0.85); }
+#menu .mhint { position: absolute; top: 268px; left: 40px; right: 40px; text-align: center;
+               font-size: 27px; font-weight: bold; color: #FFD54F; text-shadow: 0 0 4px #000; }
+/* Round buttons, 110 px */
+#menu .mbtn { position: absolute; top: 125px; width: 110px; height: 110px; border-radius: 55px; background: #2B2B2B;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6); }
+#menu .mbtn svg { margin: 28px; }
+#menu .mleft { left: 36px; }
+#menu .mright { right: 36px; }
+/* Center / fit: smaller round buttons, bottom middle */
+#menu .msmall { top: 262px; width: 76px; height: 76px; border-radius: 38px; }
+#menu .msmall svg { width: 40px; height: 40px; margin: 18px; }
+#menu .mcenter { left: 98px; }
+#menu .mfit { left: 186px; }
+#menu .mmid { left: 142px; }
+/* Waiting for the confirmation tap */
+#menu .mbtn.armed { box-shadow: 0 0 0 5px #fff; }

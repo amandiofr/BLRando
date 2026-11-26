@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug builds only: lets adb inject fake GPS fixes to test recording at the desk -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <receiver
+            android:name=".DebugFixReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="fr.amandio.blrando.DEBUG_FIX" />
+                <action android:name="fr.amandio.blrando.DEBUG_ZOOM" />
+                <action android:name="fr.amandio.blrando.DEBUG_MSG" />
+                <action android:name="fr.amandio.blrando.DEBUG_NOTIF" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

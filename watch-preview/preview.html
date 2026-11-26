@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>BLRando watch preview</title>
+    <style>
+        body { margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;
+               background: #2b2b2b; font-family: sans-serif; color: #aaa; flex-direction: column; gap: 18px; }
+        /* Galaxy Watch 46 mm: 360x360 round screen inside a steel bezel */
+        #bezel { width: 420px; height: 420px; border-radius: 50%; display: flex; align-items: center;
+                 justify-content: center; background: radial-gradient(circle, #555 60%, #222 72%, #999 74%, #333 100%); }
+        #screen { width: 360px; height: 360px; border-radius: 50%; overflow: hidden; border: 0; background: #000; }
+    </style>
+</head>
+<body>
+    <div id="bezel"><iframe id="screen" src="../watch/index.html"></iframe></div>
+    <div>Molette = lunette (haut = sens horaire) · Échap = touche retour · C = poignet simulé on/off</div>
+    <div id="wrist">poignet : —</div>
+    <!-- Optional: a real frame rendered by the phone (sets window.SAMPLE_FRAME) -->
+    <script src="frame.js"></script>
+    <script>
+        // Turn mouse wheel / keys into the Tizen events the watch app listens to
+        var frame = document.getElementById('screen');
+        function send(type, detail) {
+            var doc = frame.contentDocument;
+            var ev = new CustomEvent(type, { detail: detail });
+            if (type === 'tizenhwkey') ev.keyName = detail.keyName;
+            doc.dispatchEvent(ev);
+        }
+        // Wheel anywhere on the watch (ring or screen) = one bezel detent, at most every 150 ms
+        var lastWheel = 0;
+        function onWheel(e) {
+            e.preventDefault();
+            var now = Date.now();
+            if (now - lastWheel < 150) return;
+            lastWheel = now;
+            send('rotarydetent', { direction: e.deltaY < 0 ? 'CW' : 'CCW' });
+        }
+        document.getElementById('bezel').addEventListener('wheel', onWheel, { passive: false });
+        // The screen is an iframe: its wheel events never reach this page, listen inside it too
+        function hookFrame() { frame.contentDocument.addEventListener('wheel', onWheel, { passive: false }); }
+        frame.addEventListener('load', hookFrame);
+        // Already loaded before this script ran
+        if (frame.contentDocument && frame.contentDocument.readyState === 'complete'
+            && frame.contentDocument.URL !== 'about:blank') hookFrame();
+        // Simulated wrist: where the top of the watch points (compass, degrees from north).
+        // Slow swing of +/-35 degrees, plus a quarter turn every 30 s, sent like the watch's compass sensor.
+        var wristOn = true, t0 = Date.now();
+        function wristHeading() {
+            var t = (Date.now() - t0) / 1000;
+            return (30 + 90 * Math.floor(t / 30) + 35 * Math.sin(t * 2 * Math.PI / 8) + 3600) % 360;
+        }
+        setInterval(function () {
+            if (!wristOn || !frame.contentWindow) return;
+            var h = wristHeading();
+            var ev = new Event('deviceorientationabsolute');
+            ev.alpha = (360 - h) % 360;  // alpha turns the other way
+            frame.contentWindow.dispatchEvent(ev);
+            document.getElementById('wrist').textContent = 'poignet : haut de la montre vers ' + Math.round(h) + '°';
+        }, 100);
+        // preview.html#menu: open the back-key menu after loading (to check it without a keyboard)
+        if (location.hash === '#menu' || location.hash === '#armed') setTimeout(function () { send('tizenhwkey', { keyName: 'back' }); }, 2500);
+        // preview.html#armed: then one tap on the record button, to check the confirmation screen
+        if (location.hash === '#armed') setTimeout(function () {
+            var b = frame.contentDocument.querySelector('#menu .mright');
+            if (b) b.click();
+        }, 3000);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'c' || e.key === 'C') {
+                wristOn = !wristOn;
+                document.getElementById('wrist').textContent = wristOn ? 'poignet simulé' : 'poignet immobile';
+            }
+            if (e.key === 'Escape') send('tizenhwkey', { keyName: 'back' });
+            if (e.key === 'ArrowRight') send('rotarydetent', { direction: 'CW' });
+            if (e.key === 'ArrowLeft') send('rotarydetent', { direction: 'CCW' });
+        });
+    </script>
+</body>
+</html>

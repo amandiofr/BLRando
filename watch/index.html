@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>BLRando</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- Map image drawn by the phone (360x360: map, tracks, arrow) -->
+    <!-- North-up map from the phone, turned by the watch compass so it stays aligned with the ground -->
+    <img id="map" alt="" />
+
+    <!-- North marker on the rim, turns with the compass -->
+    <div id="northRing">
+        <!-- Black triangle pointing outward, "N" underneath, both turning with the ring -->
+        <svg id="northMark" viewBox="0 0 30 40">
+            <path d="M15,2 L25,17 L5,17 Z" fill="#000" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" />
+            <text id="northLetter" x="15" y="36" text-anchor="middle" font-size="17" font-weight="bold" font-family="sans-serif"
+                  fill="#000" stroke="#fff" stroke-width="3" paint-order="stroke">N</text>
+        </svg>
+    </div>
+
+    <!-- Hiker: always at the center, Gaia-style arrowhead, turned by the phone's "heading" -->
+    <svg id="hiker" viewBox="-20 -24 40 44">
+        <path d="M0,-22 L-17,16 L0,6 Z" fill="#C4561A" fill-opacity="0.85" />
+        <path d="M0,-22 L0,6 L17,16 Z" fill="#F0843A" fill-opacity="0.85" />
+        <path d="M0,-22 L17,16 L0,6 L-17,16 Z" fill="none" stroke="#8A3A0E" stroke-width="1.2" stroke-linejoin="round" />
+    </svg>
+
+    <!-- Position when the direction is unknown -->
+    <div id="hikerDot"></div>
+
+    <!-- Top: recording dot + time -->
+    <div id="top" class="band"><span id="rec"></span><span id="time">--:--</span></div>
+
+    <!-- Bottom: duration · distance (only while recording) -->
+    <div id="bottom" class="band"></div>
+
+    <!-- Lifebuoy alert: red ring + distance -->
+    <div id="offRing"></div>
+    <div id="offText"></div>
+
+    <!-- Zoom level, shown briefly when the bezel turns -->
+    <div id="zoomTip"></div>
+
+    <!-- Alerts: link lost, GPS lost, battery... -->
+    <div id="status">Connexion au téléphone…</div>
+
+    <!-- Back key menu: bezel to choose, back key or tap to confirm -->
+    <div id="menu"></div>
+
+    <script src="link.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

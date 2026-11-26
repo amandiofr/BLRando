@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- BL family, layer 3: the app's own subject. Replace this placeholder.
+     Viewport 108x108. Keep the drawing inside the box (33,33)-(75,75) so it stays clear of the arrows. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M54,38 a16,16 0 1,1 0,32 a16,16 0 1,1 0,-32 Z" />
+</vector>

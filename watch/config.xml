@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BLRando watch app (Tizen web app). required_version 4.0: Galaxy Watch 46 mm (SM-R800) runs Tizen 4.0 / 5.5 -->
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets"
+        id="http://amandio.fr/blrando" version="0.1.0" viewmodes="maximized">
+    <tizen:application id="blrandowch.BLRando" package="blrandowch" required_version="4.0" />
+    <content src="index.html" />
+    <feature name="http://tizen.org/feature/screen.size.all" />
+    <feature name="http://tizen.org/feature/screen.shape.circle" />
+    <icon src="icon.png" />
+    <name>BLRando</name>
+    <tizen:profile name="wearable" />
+    <!-- Runs with the screen off: link / GPS / off-track alarms must vibrate even wrist down -->
+    <tizen:setting background-support="enable" encryption="disable" hwkey-event="enable" />
+    <tizen:background-category value="sensor" />
+    <tizen:background-category value="background-network" />
+    <tizen:privilege name="http://tizen.org/privilege/haptic" />
+    <tizen:privilege name="http://tizen.org/privilege/power" />
+</widget>

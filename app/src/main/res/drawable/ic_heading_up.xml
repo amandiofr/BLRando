@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Map turned in the walking direction: the walker's arrow tip, pointing up -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp" android:height="32dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#FF6D00" android:strokeColor="#FFFFFF" android:strokeWidth="1.5"
+        android:strokeLineJoin="round"
+        android:pathData="M12,2.5 L19,20.5 L12,16.5 L5,20.5 Z" />
+</vector>

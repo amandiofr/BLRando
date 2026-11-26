@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Full-screen map, every control floats over it -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#202124">
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Distance · duration · time, with the red recording dot -->
+    <LinearLayout
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_banner"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp">
+
+        <View
+            android:id="@+id/recDot"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/dot_red"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/bannerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFeatureSettings="tnum"
+            android:maxLines="1"
+            android:textColor="#FFFFFF"
+            android:textSize="21dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Shown when the lifebuoy is on and we strayed from the reference -->
+    <TextView
+        android:id="@+id/offTrack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="74dp"
+        android:background="@drawable/bg_banner"
+        android:backgroundTint="#D32F2F"
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="8dp"
+        android:textColor="#FFFFFF"
+        android:textSize="19dp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="96dp"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/btnRecenter"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_round"
+            android:contentDescription="Recentrer"
+            android:src="@drawable/ic_recenter" />
+
+        <ImageButton
+            android:id="@+id/btnFit"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_round"
+            android:contentDescription="Tout afficher"
+            android:src="@drawable/ic_fit" />
+    </LinearLayout>
+
+    <!-- Round icon buttons over the map: orientation, track (hidden while recording), lifebuoy,
+         record (stop while recording) -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal">
+
+        <!-- Tap: north up <-> walking direction up -->
+        <ImageButton
+            android:id="@+id/north"
+            style="@style/RoundButton"
+            android:contentDescription="Orientation de la carte"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_north" />
+
+        <ImageButton
+            android:id="@+id/btnTrace"
+            style="@style/RoundButton"
+            android:contentDescription="Ouvrir une trace"
+            android:src="@drawable/ic_import" />
+
+        <ImageButton
+            android:id="@+id/btnBuoy"
+            style="@style/RoundButton"
+            android:contentDescription="Bouée de sauvetage"
+            android:src="@drawable/ic_lifebuoy" />
+
+        <!-- Record, or stop while recording -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/bg_capsule"
+            android:elevation="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnRecord"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Enregistrer"
+                android:src="@drawable/ic_record" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
