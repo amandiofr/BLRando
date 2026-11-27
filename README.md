@@ -108,6 +108,11 @@ For your privacy, the phone only talks to the watch through its own hotspot, nev
 - **"No link with the phone"**: the watch no longer reaches the phone. Check that the hotspot is on and that
   BLRando is open. If it goes on, press the watch's **Back** button, then tap **Open the map**.
 
+## License
+
+GNU GPL v3: you are free to use, change and share this app, as long as what you share stays free and open,
+under the same license. Full text: [click here](LICENSE).
+
 ## For developers
 
 Building, releases and how it works: [click here](docs/TECHNICAL.md).
