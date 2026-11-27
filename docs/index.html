@@ -110,14 +110,14 @@
   dl.buttons dd { margin: 0; color: var(--muted); }
 
   /* Previous / next app, in the order of amandiofr.github.io */
-  .pnav { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 52px; }
+  .pnav { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: 52px; }
   .pn { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--text);
         background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px;
         box-shadow: var(--shadow); }
   .pn:hover { border-color: var(--brand); }
   .pn.next { align-items: flex-end; text-align: right; }
   .pn .lbl { font-size: 14px; color: var(--muted); font-weight: 600; }
-  .pn .nm { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; }
+  .pn .nm { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
   .pn .nm img { width: 36px; height: 36px; border-radius: 9px; flex: 0 0 auto; }
   @media (max-width: 520px) { .pn .nm { font-size: 16px; } .pn { padding: 14px; } }
   footer { margin-top: 56px; padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
@@ -127,7 +127,7 @@
   .coffee:hover { background: #bf4a20; }
 
   @media (max-width: 520px) {
-    header { padding: 40px 0 48px; }
+    header { padding: 80px 0 48px; }
     header h1 { font-size: 34px; }
     header p.tagline { font-size: 18px; }
     dl.buttons { grid-template-columns: 1fr; gap: 2px; }
