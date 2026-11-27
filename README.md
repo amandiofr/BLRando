@@ -46,7 +46,7 @@ You need an Android 11 phone or newer. BLRando is not on the Play Store.
 - **Folder** (bottom): load a track (GPX file).
 - **Lifebuoy**: turns the off-track alert on or off.
 - **Red dot**: start or stop recording. Your hikes go to the phone's **Download/BLRando** folder.
-- **Compass**: north up, or the map turns as you walk.
+- **Compass** (bottom left): north up, or the map turns as you walk. Tap to switch.
 - **Target**: back to where you are. **Four arrows**: the whole track.
 - **Long press on the map**: directions in Google Maps.
 
@@ -82,7 +82,7 @@ For your privacy, the phone only talks to the watch through its own hotspot, nev
   and one short vibration when you are back on it.
 - **Recording**: saved every 30 s, so nothing is lost if the phone dies. When you stop, you can share the file.
   The time at the top then shows distance · duration · time; the duration includes breaks.
-- **Compass button** blue: the map turns as you walk.
+- **Compass button**: a red and white needle when north is up, an orange arrow when the map turns as you walk.
 - **Tap the time at the top**: shows the address for the watch again.
 - **Language**: the phone's language (English, French, German or Portuguese). To choose another one:
   phone settings > Apps > BLRando > Language.
