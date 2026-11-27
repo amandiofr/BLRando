@@ -109,6 +109,17 @@
   dl.buttons dt { font-weight: 700; }
   dl.buttons dd { margin: 0; color: var(--muted); }
 
+  /* Previous / next app, in the order of amandiofr.github.io */
+  .pnav { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 52px; }
+  .pn { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--text);
+        background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px;
+        box-shadow: var(--shadow); }
+  .pn:hover { border-color: var(--brand); }
+  .pn.next { align-items: flex-end; text-align: right; }
+  .pn .lbl { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .pn .nm { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; }
+  .pn .nm img { width: 36px; height: 36px; border-radius: 9px; flex: 0 0 auto; }
+  @media (max-width: 520px) { .pn .nm { font-size: 16px; } .pn { padding: 14px; } }
   footer { margin-top: 56px; padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; }
   .coffee { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; color: #fff;
@@ -241,6 +252,13 @@
     <p>BLRando has no account and collects nothing about you. The phone only talks to the watch through its own
       hotspot, never on a shared Wi-Fi.</p>
   </section>
+
+  <nav class="pnav">
+    <a class="pn prev" href="https://amandiofr.github.io/Genealogie-Familiale/"><span class="lbl">&larr; Previous</span>
+      <span class="nm"><img src="https://amandiofr.github.io/icons/genealogie.png" alt="">Généalogie Familiale</span></a>
+    <a class="pn next" href="https://amandiofr.github.io/BLBrowser/"><span class="lbl">Next &rarr;</span>
+      <span class="nm"><img src="https://amandiofr.github.io/icons/blbrowser.png" alt="">BLBrowser</span></a>
+  </nav>
 
 </main>
 
