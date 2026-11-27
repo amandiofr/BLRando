@@ -2,7 +2,7 @@
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/amandiofr)
 
-A hiking map for Android phones, also shown on a Samsung Galaxy Watch.
+A hiking map for Android phones, also shown on your smartwatch.
 
 - Load the track of your hike: it shows on the map, with a **car** at the start.
 - **Google Maps** takes you to the start: a long press on the map opens the directions.
@@ -54,21 +54,26 @@ You need an Android 11 phone or newer. BLRando is not on the Play Store.
 
 ## The watch (optional)
 
-You need a Samsung Galaxy Watch with Samsung's **Internet** browser (for example the 2018 Galaxy Watch).
-Nothing to install on the watch.
+You need a watch with a **web browser** and Wi-Fi. Nothing to install on the watch.
+
+- **Samsung watches** (Galaxy Watch, Watch Active, Watch 3, Gear S3): use Samsung's **Internet** browser.
+  BLRando is tested on the 2018 Galaxy Watch.
+- **Wear OS watches** (Galaxy Watch 4 and later, Pixel Watch…): first install a web browser from the watch's Play Store.
+- A **second phone or a tablet** works too, for example for the person hiking with you.
+- Apple Watch, Garmin and Fitbit have no web browser, so they can't show the map.
 
 **First time:**
 
 1. On the phone, turn on the **mobile hotspot**, set to **2.4 GHz**. No mobile network needed.
 2. Connect the watch to this hotspot (watch settings > Connections > Wi-Fi).
 3. In BLRando, tap the time at the top: it shows an address such as `10.1.2.3:8765`.
-4. On the watch, open **Internet**, type this address, add it to the bookmarks, then tap **Open the map**.
+4. On the watch, open the browser (**Internet** on Samsung watches), type this address, add it to the bookmarks, then tap **Open the map**.
 
 **Next times**: hotspot on, BLRando open, then open the bookmark on the watch.
 
 On the watch:
 
-- **Turn the bezel** to zoom, **drag** to move the map, **tap** for the menu.
+- **Turn the bezel** (or the crown) to zoom, **drag** to move the map, **tap** for the menu.
 - **On the edge**: north, the sun with the sunset time, and the moon.
 - The watch and the phone always show the same place.
 For your privacy, the phone only talks to the watch through its own hotspot, never on a shared Wi-Fi.
