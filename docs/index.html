@@ -13,6 +13,12 @@
 <meta property="og:description" content="A hiking map for Android phones, also shown on your smartwatch.">
 <meta property="og:image" content="https://amandiofr.github.io/BLRando/screenshots/watch_sky.png">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="en" href="https://amandiofr.github.io/BLRando/">
+<link rel="alternate" hreflang="fr" href="https://amandiofr.github.io/BLRando/fr/">
+<link rel="alternate" hreflang="x-default" href="https://amandiofr.github.io/BLRando/">
+<script>/* French browser, first visit: French page */ (function () { try {
+  if (!localStorage.getItem('lang') && /^fr/i.test(navigator.language || '')) location.replace('https://amandiofr.github.io/BLRando/fr/');
+} catch (e) {} })();</script>
 <style>
   :root {
     --bg: #f6f8f4;
@@ -54,6 +60,7 @@
     padding: 76px 0 64px; text-align: center;
   }
   header nav { position: absolute; top: 16px; left: 0; right: 0; text-align: left; }
+  header nav .wrap { display: flex; justify-content: space-between; }
   header nav a {
     display: inline-flex; align-items: center; gap: 6px; color: #fff; font-weight: 600; font-size: 16px;
     text-decoration: none; padding: 8px 16px 8px 12px; border-radius: 24px;
@@ -147,7 +154,7 @@
 <body>
 
 <header>
-  <nav><div class="wrap"><a href="https://amandiofr.github.io/">&larr; All apps</a></div></nav>
+  <nav><div class="wrap"><a href="https://amandiofr.github.io/">&larr; All apps</a><a href="fr/" lang="fr" onclick="try{localStorage.setItem('lang','fr')}catch(e){}">Français</a></div></nav>
   <div class="wrap">
     <img class="icon" src="icon.png" alt="BLRando icon">
     <h1>BLRando</h1>

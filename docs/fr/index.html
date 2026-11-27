@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLRando — carte de randonnée pour Android et montres connectées</title>
+<meta name="description" content="Une carte de randonnée pour téléphones Android, affichée aussi sur votre montre connectée. Suivez votre trace, soyez prévenu si vous vous en écartez, enregistrez votre randonnée.">
+<link rel="icon" href="../icon.png">
+<link rel="canonical" href="https://amandiofr.github.io/BLRando/fr/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://amandiofr.github.io/BLRando/fr/">
+<meta property="og:title" content="BLRando">
+<meta property="og:description" content="Une carte de randonnée pour téléphones Android, affichée aussi sur votre montre connectée.">
+<meta property="og:image" content="https://amandiofr.github.io/BLRando/screenshots/watch_sky.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="en" href="https://amandiofr.github.io/BLRando/">
+<link rel="alternate" hreflang="fr" href="https://amandiofr.github.io/BLRando/fr/">
+<link rel="alternate" hreflang="x-default" href="https://amandiofr.github.io/BLRando/">
+<style>
+  :root {
+    --bg: #f6f8f4;
+    --surface: #ffffff;
+    --text: #1d2a1f;
+    --muted: #5b6b5e;
+    --line: #dfe6dc;
+    --brand: #2e7d32;
+    --brand-dark: #0b3d12;
+    --brand-light: #43a047;
+    --accent: #d81b60;
+    --hero-bg: linear-gradient(160deg, #0b3d12 0%, #1f6a28 60%, #43a047 100%);
+    --hero-text: #ffffff;
+    --shadow: 0 6px 24px rgba(11, 61, 18, 0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1511;
+      --surface: #17201a;
+      --text: #e6efe7;
+      --muted: #9fb2a3;
+      --line: #26332a;
+      --brand: #66bb6a;
+      --shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  a { color: var(--brand); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  /* Hero */
+  header {
+    position: relative; background: var(--hero-bg); color: var(--hero-text);
+    padding: 76px 0 64px; text-align: center;
+  }
+  header nav { position: absolute; top: 16px; left: 0; right: 0; text-align: left; }
+  header nav .wrap { display: flex; justify-content: space-between; }
+  header nav a {
+    display: inline-flex; align-items: center; gap: 6px; color: #fff; font-weight: 600; font-size: 16px;
+    text-decoration: none; padding: 8px 16px 8px 12px; border-radius: 24px;
+    background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+  header nav a:hover { background: rgba(255, 255, 255, 0.28); }
+  header img.icon { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3); }
+  header h1 { margin: 18px 0 6px; font-size: 42px; letter-spacing: -0.5px; }
+  header p.tagline { margin: 0 auto 28px; max-width: 560px; font-size: 20px; opacity: 0.95; }
+  .download {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #ffffff; color: var(--brand-dark); text-decoration: none;
+    font-weight: 700; font-size: 19px; padding: 15px 30px; border-radius: 40px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
+  .download:hover { transform: translateY(-1px); }
+  .download svg { width: 22px; height: 22px; }
+  header .small { margin-top: 14px; font-size: 14px; opacity: 0.85; }
+  header .small a { color: #ffffff; }
+
+  section { padding: 52px 0 8px; }
+  h2 { font-size: 28px; margin: 0 0 22px; letter-spacing: -0.3px; }
+
+  /* Features */
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 20px; box-shadow: var(--shadow);
+  }
+  .card .dot { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center;
+               justify-content: center; background: var(--brand-light); margin-bottom: 12px; }
+  .card .dot svg { width: 24px; height: 24px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+
+  /* Screenshots */
+  .shots { display: flex; gap: 16px; overflow-x: auto; padding: 4px 2px 14px; scroll-snap-type: x mandatory; }
+  .shots figure { margin: 0; flex: 0 0 auto; scroll-snap-align: start; text-align: center; }
+  .shots img { display: block; border-radius: 18px; box-shadow: var(--shadow); }
+  .shots.phone img { width: 220px; }
+  .shots.watch img { width: 180px; border-radius: 50%; }
+  .shots figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+  .note { color: var(--muted); font-size: 15px; margin: 4px 0 0; }
+
+  /* Steps */
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; }
+  ol.steps li { counter-increment: s; position: relative; padding: 0 0 14px 44px; }
+  ol.steps li::before {
+    content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--brand); color: #fff; font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  @media (prefers-color-scheme: dark) { ol.steps li::before { color: #0f1511; } }
+  .card h3.big { font-size: 20px; margin-bottom: 14px; }
+  code { background: var(--line); padding: 1px 6px; border-radius: 6px; font-size: 15px; }
+
+  /* Buttons list */
+  dl.buttons { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 10px 18px; }
+  dl.buttons dt { font-weight: 700; }
+  dl.buttons dd { margin: 0; color: var(--muted); }
+
+  /* Previous / next app, in the order of amandiofr.github.io */
+  .pnav { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: 52px; }
+  .pn { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--text);
+        background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px;
+        box-shadow: var(--shadow); }
+  .pn:hover { border-color: var(--brand); }
+  .pn.next { align-items: flex-end; text-align: right; }
+  .pn .lbl { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .pn .nm { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+  .pn .nm img { width: 36px; height: 36px; border-radius: 9px; flex: 0 0 auto; }
+  @media (max-width: 520px) { .pn .nm { font-size: 16px; } .pn { padding: 14px; } }
+  footer { margin-top: 56px; padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; }
+  .coffee { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; color: #fff;
+            background: #d4572a; padding: 8px 18px; border-radius: 24px; }
+  .coffee:hover { background: #bf4a20; }
+
+  @media (max-width: 520px) {
+    header { padding: 80px 0 48px; }
+    header h1 { font-size: 34px; }
+    header p.tagline { font-size: 18px; }
+    dl.buttons { grid-template-columns: 1fr; gap: 2px; }
+    dl.buttons dd { margin-bottom: 10px; }
+    .shots.phone img { width: 180px; }
+    .shots.watch img { width: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav><div class="wrap"><a href="https://amandiofr.github.io/fr/">&larr; Toutes les applis</a><a href="../" lang="en" onclick="try{localStorage.setItem('lang','en')}catch(e){}">English</a></div></nav>
+  <div class="wrap">
+    <img class="icon" src="../icon.png" alt="BLRando">
+    <h1>BLRando</h1>
+    <p class="tagline">Une carte de randonnée pour votre téléphone Android, et aussi sur votre montre connectée.</p>
+    <a class="download" href="https://github.com/amandiofr/BLRando/releases/latest/download/BLRando.apk">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M6 10l6 6 6-6M4 20h16"/></svg>
+      Télécharger pour Android
+    </a>
+    <p class="small">Gratuit · Android 11 ou plus récent · français, anglais, allemand, portugais</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>Ce que ça fait</h2>
+    <div class="features">
+      <div class="card">
+        <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-12 4 7 3-4 5 9z"/></svg></div>
+        <h3>Votre trace sur une carte de rando</h3>
+        <p>Chargez la trace de votre randonnée. Une voiture marque le départ.</p>
+      </div>
+      <div class="card">
+        <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+        <h3>Rejoindre le départ</h3>
+        <p>Un appui long sur la carte ouvre l'itinéraire dans Google Maps.</p>
+      </div>
+      <div class="card">
+        <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 4v4.5M12 15.5V20M4 12h4.5M15.5 12H20"/></svg></div>
+        <h3>Ne jamais se perdre</h3>
+        <p>La bouée vibre quand vous vous écartez de la trace.</p>
+      </div>
+      <div class="card">
+        <div class="dot"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="#fff"/></svg></div>
+        <h3>Enregistrer votre rando</h3>
+        <p>Gardez la trace que vous avez parcourue, et partagez-la.</p>
+      </div>
+      <div class="card">
+        <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="6"/><path d="M9 6l1-3h4l1 3M9 18l1 3h4l1-3"/></svg></div>
+        <h3>Sur votre montre</h3>
+        <p>La carte, votre position, le nord, le soleil avec l'heure du coucher et la lune, le téléphone restant dans la poche.</p>
+      </div>
+    </div>
+    <p class="note">La carte est OpenTopoMap, une carte de randonnée qui couvre la France, l'Allemagne et le reste du monde.</p>
+  </section>
+
+  <section>
+    <h2>Captures d'écran</h2>
+    <div class="shots phone">
+      <figure><img src="../screenshots/phone_record.jpg" alt="Téléphone : enregistrement le long de la trace" loading="lazy"><figcaption>Enregistrement</figcaption></figure>
+      <figure><img src="../screenshots/phone_fit.jpg" alt="Téléphone : toute la trace" loading="lazy"><figcaption>Toute la trace</figcaption></figure>
+      <figure><img src="../screenshots/phone_off.jpg" alt="Téléphone : hors de la trace" loading="lazy"><figcaption>Hors de la trace</figcaption></figure>
+    </div>
+    <div class="shots watch">
+      <figure><img src="../screenshots/watch_sky.png" alt="Montre : nord, soleil, heure du coucher et lune sur le bord" loading="lazy"><figcaption>Nord, soleil et lune</figcaption></figure>
+      <figure><img src="../screenshots/watch_follow.png" alt="Montre : suivi" loading="lazy"><figcaption>Suivi</figcaption></figure>
+      <figure><img src="../screenshots/watch_menu.png" alt="Montre : menu" loading="lazy"><figcaption>Menu</figcaption></figure>
+      <figure><img src="../screenshots/watch_fit.png" alt="Montre : toute la trace" loading="lazy"><figcaption>Toute la trace</figcaption></figure>
+      <figure><img src="../screenshots/watch_off.png" alt="Montre : hors de la trace" loading="lazy"><figcaption>Hors de la trace</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pour commencer</h2>
+    <div class="two">
+      <div class="card">
+        <h3 class="big">Installer sur le téléphone</h3>
+        <ol class="steps">
+          <li>Sur le téléphone, touchez <a href="https://github.com/amandiofr/BLRando/releases/latest/download/BLRando.apk"><b>Télécharger pour Android</b></a>.</li>
+          <li>Ouvrez le fichier téléchargé et touchez <b>Installer</b>. Si Android ou Play Protect le demande, autorisez-le.</li>
+          <li>Quand BLRando demande votre position, choisissez <b>Toujours autoriser</b>.</li>
+        </ol>
+        <p class="note">Mises à jour : quand une nouvelle version sort, BLRando la propose à l'ouverture. Touchez <b>Mettre à jour</b>.</p>
+      </div>
+      <div class="card">
+        <h3 class="big">Connecter la montre (facultatif)</h3>
+        <ol class="steps">
+          <li>Sur le téléphone, activez le <b>point d'accès mobile</b>, réglé sur <b>2,4 GHz</b>. Pas besoin de réseau mobile.</li>
+          <li>Connectez la montre à ce point d'accès (paramètres de la montre &gt; Connexions &gt; Wi-Fi).</li>
+          <li>Dans BLRando, touchez l'heure en haut : elle affiche une adresse comme <code>10.1.2.3:8765</code>.</li>
+          <li>Sur la montre, ouvrez le navigateur (<b>Internet</b> sur les montres Samsung), tapez cette adresse, ajoutez-la aux favoris, puis touchez <b>Ouvrir la carte</b>.</li>
+        </ol>
+        <p class="note">Les fois suivantes : point d'accès activé, BLRando ouvert, puis ouvrez le favori sur la montre.
+          Il faut une montre avec un navigateur web et le Wi-Fi : les montres Samsung avec leur navigateur Internet (testé sur
+          la Galaxy Watch de 2018), ou les montres Wear OS avec un navigateur installé depuis leur Play Store. Un deuxième
+          téléphone ou une tablette fonctionne aussi. Les Apple Watch, Garmin et Fitbit n'ont pas de navigateur web.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Les boutons</h2>
+    <div class="card">
+      <dl class="buttons">
+        <dt>Dossier</dt><dd>Charger une trace (fichier GPX).</dd>
+        <dt>Bouée</dt><dd>Activer ou couper l'alerte de sortie de trace.</dd>
+        <dt>Point rouge</dt><dd>Démarrer ou arrêter l'enregistrement. Vos randos vont dans le dossier Download/BLRando du téléphone.</dd>
+        <dt>Boussole</dt><dd>Le nord en haut, ou la carte qui tourne dans le sens de la marche.</dd>
+        <dt>Cible</dt><dd>Revenir à votre position.</dd>
+        <dt>Quatre flèches</dt><dd>Toute la trace.</dd>
+        <dt>Appui long sur la carte</dt><dd>Itinéraire dans Google Maps.</dd>
+        <dt>Sur la montre</dt><dd>Tournez la lunette (ou la couronne) pour zoomer, faites glisser pour déplacer la carte, touchez pour le menu.</dd>
+      </dl>
+    </div>
+    <p class="note">D'autres astuces (retirer une trace, alertes, deux montres…) :
+      <a href="https://github.com/amandiofr/BLRando#advanced-use">utilisation avancée</a>, en anglais.</p>
+  </section>
+
+  <section>
+    <h2>Votre vie privée</h2>
+    <p>BLRando n'a pas de compte et ne collecte rien sur vous. Le téléphone ne parle à la montre que par son propre
+      point d'accès, jamais sur un Wi-Fi partagé.</p>
+  </section>
+
+  <nav class="pnav">
+    <a class="pn prev" href="https://amandiofr.github.io/fr/Genealogie-Familiale/"><span class="lbl">&larr; Précédente</span>
+      <span class="nm"><img src="https://amandiofr.github.io/icons/genealogie.png" alt="">Généalogie Familiale</span></a>
+    <a class="pn next" href="https://amandiofr.github.io/fr/BLBrowser/"><span class="lbl">Suivante &rarr;</span>
+      <span class="nm"><img src="https://amandiofr.github.io/icons/blbrowser.png" alt="">BLBrowser</span></a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><a href="https://amandiofr.github.io/fr/">Toutes les applis</a> · <a href="https://github.com/amandiofr/BLRando">code source sur GitHub</a></span>
+    <span>Carte © contributeurs OpenStreetMap, SRTM · © OpenTopoMap (CC-BY-SA)</span>
+    <a class="coffee" href="https://ko-fi.com/amandiofr">&#9749; Offrez-moi un café</a>
+  </div>
+</footer>
+
+</body>
+</html>
