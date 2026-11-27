@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.BitmapDrawable
 import android.location.LocationListener
 import android.location.LocationManager
 import android.net.Uri
@@ -36,6 +37,7 @@ import android.view.HapticFeedbackConstants
 import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.views.overlay.CopyrightOverlay
 import org.osmdroid.views.overlay.MapEventsOverlay
+import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 import java.io.File
 import java.text.SimpleDateFormat
@@ -68,6 +70,8 @@ class MainActivity : Activity() {
     private val refLines = ArrayList<Polyline>()
     /** One polyline per recorded segment (a GPS jump starts a new one). */
     private val trailLines = ArrayList<Polyline>()
+    /** Car and checkered flag at the ends of the reference track. */
+    private val endMarkers = ArrayList<Marker>()
     private lateinit var posOverlay: PositionOverlay
     private var trailDrawn = 0
 
@@ -152,7 +156,11 @@ class MainActivity : Activity() {
         if (Session.reference.isEmpty()) loadReference(fitAfter = false) else drawReference()
         handleIncoming(intent)
         // The watch may start tracking with the phone in the pocket: get what it needs up front
-        if (!hasLocationPermission()) requestPermissionsNow() else askBatteryExemption()
+        if (!hasLocationPermission()) requestPermissionsNow() else {
+            askBatteryExemption()
+            // New version on GitHub? At the first opening of the day, not on the very first launch (permissions first)
+            AppUpdater.checkDaily(this)
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -399,8 +407,8 @@ class MainActivity : Activity() {
         outlinePaint.strokeWidth = dp(5f)
         outlinePaint.strokeCap = Paint.Cap.ROUND
         outlinePaint.strokeJoin = Paint.Join.ROUND
-        // Under the arrow, above the reference
-        map.overlays.add(map.overlays.indexOf(posOverlay), this)
+        // Under the track end pins and the arrow, above the reference
+        map.overlays.add(map.overlays.indexOf(endMarkers.firstOrNull() ?: posOverlay), this)
         trailLines.add(this)
     }
 
@@ -702,7 +710,27 @@ class MainActivity : Activity() {
             refLines.add(line)
             map.overlays.add(1, line) // under the trail and the arrow
         }
+        drawEnds()
         map.invalidate()
+    }
+
+    /** Car at the start of the reference track, checkered flag at its end (none for a loop). */
+    private fun drawEnds() {
+        endMarkers.forEach { map.overlays.remove(it) }
+        endMarkers.clear()
+        val (start, end) = Session.referenceEnds() ?: return
+        fun pin(p: GeoPoint, kind: TrackIcons.Kind) = Marker(map).apply {
+            position = p
+            icon = BitmapDrawable(resources, TrackIcons.bitmap(kind, dp(42f).toInt()))
+            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+            infoWindow = null
+            setOnMarkerClickListener { _, _ -> false } // taps go to the map
+        }
+        // The flag first, so the car is on top when they are close
+        end?.let { endMarkers.add(pin(it, TrackIcons.Kind.FLAG)) }
+        endMarkers.add(pin(start, TrackIcons.Kind.CAR))
+        // Above the trail, under the arrow
+        endMarkers.forEach { map.overlays.add(map.overlays.indexOf(posOverlay), it) }
     }
 
     private fun askRemoveReference() {
@@ -713,6 +741,8 @@ class MainActivity : Activity() {
                 refFile.delete()
                 refLines.forEach { map.overlays.remove(it) }
                 refLines.clear()
+                endMarkers.forEach { map.overlays.remove(it) }
+                endMarkers.clear()
                 Session.reference = emptyList()
                 Session.referenceName = null
                 if (Session.guiding) {

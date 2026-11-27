@@ -1,4 +1,4 @@
-package fr.amandio.blrando
+﻿package fr.amandio.blrando
 
 import android.location.Location
 import org.osmdroid.util.GeoPoint
@@ -115,6 +115,18 @@ object Session {
 
     /** What "englober" shows: the reference track, else the recorded trail. */
     fun fitPoints(): List<GeoPoint> = reference.flatten().ifEmpty { trail.map { it.point } }
+
+    /**
+     * Start of the reference track (car) and its end (checkered flag), the end being null for a loop:
+     * when it comes back within [LOOP_M] of the start. Null without a reference track.
+     */
+    fun referenceEnds(): Pair<GeoPoint, GeoPoint?>? {
+        val start = reference.firstOrNull { it.isNotEmpty() }?.first() ?: return null
+        val end = reference.last { it.isNotEmpty() }.last()
+        return start to end.takeIf { start.distanceToAsDouble(it) > LOOP_M }
+    }
+
+    const val LOOP_M = 150.0
 
     // ---- reference and guiding
 

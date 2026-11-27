@@ -91,6 +91,19 @@ class WatchFeed(private val ctx: Context) {
         o.put("phoneBatt", phoneBattery())
         // Same direction as the phone arrow: GPS course while walking, phone compass when standing still
         o.put("heading", Session.displayHeading?.let { Math.round(it) } ?: JSONObject.NULL)
+        // Sun and moon for the rim marks: azimuth and altitude in degrees, moon phase 0..1 (0.5 = full)
+        Session.position?.let { p ->
+            val now = System.currentTimeMillis()
+            val sun = Sky.sun(now, p.latitude, p.longitude)
+            val moon = Sky.moon(now, p.latitude, p.longitude)
+            val set = Sky.sunset(now, p.latitude, p.longitude)?.let {
+                java.text.SimpleDateFormat("HH:mm", java.util.Locale.FRANCE).format(java.util.Date(it))
+            }
+            o.put("sun", JSONObject().put("az", Math.round(sun.azimuth)).put("alt", Math.round(sun.altitude))
+                .put("set", set ?: JSONObject.NULL))
+            o.put("moon", JSONObject().put("az", Math.round(moon.body.azimuth)).put("alt", Math.round(moon.body.altitude))
+                .put("phase", Math.round(moon.phase * 1000) / 1000.0))
+        }
         // Changes with each install of BLRando: the watch page reloads itself to get the new version
         o.put("ver", installTime)
     }
@@ -148,6 +161,7 @@ class WatchFeed(private val ctx: Context) {
         pending = false
         val here = GeoPoint(pos.latitude, pos.longitude)
         val free = Session.watchCenter
+        val ends = Session.referenceEnds()
         val snap = WatchRenderer.Snapshot(
             center = free ?: here,
             heading = Session.heading,
@@ -158,6 +172,8 @@ class WatchFeed(private val ctx: Context) {
             // Moved view: the hiker is not at the center, the phone draws the position on the image
             marker = if (free != null) here else null,
             markerHeading = Session.displayHeading,
+            start = ends?.first,
+            finish = ends?.second,
         )
         // "fit" (= free view) tells the watch: north up, no arrow at the center
         val st = JSONObject().also { status(it); it.put("fit", free != null); it.put("panSeq", panSeq) }

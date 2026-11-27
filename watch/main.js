@@ -74,7 +74,8 @@
      * direction (GPS heading), so the arrow points up and the N marker shows where north is.
      */
     var inBrowser = typeof tizen === 'undefined' && location.protocol.indexOf('http') === 0
-        && location.pathname.indexOf('watch-preview') < 0 && window.parent === window;
+        && location.pathname.indexOf('watch-preview') < 0 && window.parent === window
+        || location.search.indexOf('browser') >= 0; // preview.html?watch: same behaviour on a PC
 
     var fitView = false; // view moved or "englober": north up, the position is drawn on the image by the phone
 
@@ -125,6 +126,10 @@
         // North near the top: hide the "N" (the triangle stays) so it doesn't cover the time
         var fromTop = Math.abs(((c % 360) + 540) % 360 - 180); // degrees between north and the top, 0..180
         $('northLetter').style.display = fromTop < 30 ? 'none' : '';
+        placeSky('sun', c);
+        placeSky('moon', c);
+        placeEnd('car', c);
+        placeEnd('flag', c);
         if (fitView) {
             $('hiker').style.display = 'none';
             $('hikerDot').style.display = 'none';
@@ -137,6 +142,84 @@
             $('hiker').style.display = 'block';
             $('hiker').style.transform = 'rotate(' + (gpsHeading - c) + 'deg)';
         }
+    }
+
+    // ------------------------------------------------------------------ sun, moon, track ends
+
+    var sky = { sun: null, moon: null };   // {az, alt[, phase]} from the phone, degrees
+    var ends = { car: null, flag: null };  // [x, y] pixels from the image center, north up
+
+    /** Sun or moon mark on the rim, at its azimuth; upright icon; dimmed below the horizon. */
+    function placeSky(name, c) {
+        var b = sky[name], ring = $(name + 'Ring');
+        if (!b) { ring.style.display = 'none'; return; }
+        ring.style.display = 'block';
+        ring.className = 'skyRing' + (b.alt < 0 ? ' below' : '');
+        var a = b.az - c;
+        ring.style.transform = 'rotate(' + a + 'deg)';
+        $(name + 'Mark').style.transform = 'rotate(' + (-a) + 'deg)';
+        if (name === 'moon') $('moonLit').setAttribute('d', moonPath(b.phase, 10));
+        if (name === 'sun') placeSunset(b, a);
+    }
+
+    /**
+     * Sunset time curved along the rim, beside the sun mark at screen angle a (degrees clockwise from the top),
+     * at the same distance from the edge: towards the bottom when the sun is in the upper half, towards the top
+     * when it is in the lower half. The arc runs clockwise when the text is in the upper half and counter-clockwise
+     * when it is in the lower half, so the text is never upside down.
+     */
+    function placeSunset(b, a) {
+        var el = $('sunsetText');
+        if (!b.set) { el.style.display = 'none'; return; }
+        var sun = ((a % 360) + 360) % 360;
+        var lower = Math.cos(sun * Math.PI / 180) < 0;
+        var right = sun < 180;
+        // Text center 47 px along the rim from the sun center (half sun + gap + half text), sun centered at r = 159
+        var step = 47 / 159 * 180 / Math.PI;
+        var ang = sun + (lower === right ? -step : step);
+        // Orientation from where the text itself is: in the lower half the letters stand on the rim side
+        // (top towards the center), in the upper half on the center side (top towards the rim).
+        lower = Math.cos(ang * Math.PI / 180) < 0;
+        // Baseline: digits (about 16 px high) centered on r = 159
+        var r = lower ? 167 : 151, span = 40;
+        function pt(deg) {
+            var t = deg * Math.PI / 180;
+            return (180 + r * Math.sin(t)).toFixed(1) + ',' + (180 - r * Math.cos(t)).toFixed(1);
+        }
+        $('sunsetPath').setAttribute('d', lower
+            ? 'M' + pt(ang + span) + ' A' + r + ',' + r + ' 0 0 0 ' + pt(ang - span)
+            : 'M' + pt(ang - span) + ' A' + r + ',' + r + ' 0 0 1 ' + pt(ang + span));
+        $('sunsetLabel').textContent = b.set;
+        el.setAttribute('class', 'skyText' + (b.alt < 0 ? ' below' : ''));
+        el.style.display = 'block';
+    }
+
+    /**
+     * Lit part of the moon disc of radius r, as seen from the northern hemisphere:
+     * lit on the right while waxing (phase < 0.5), on the left while waning.
+     * Outer limb = half circle; terminator = half ellipse of width r·|cos(2π·phase)|.
+     */
+    function moonPath(phase, r) {
+        var k = Math.cos(2 * Math.PI * phase);
+        var rx = Math.abs(k) * r;
+        var waxing = phase < 0.5, crescent = k > 0;
+        if (phase < 0.02 || phase > 0.98) return ''; // new moon: dark disc only
+        var limb = waxing ? 1 : 0;
+        var term = waxing ? (crescent ? 0 : 1) : (crescent ? 1 : 0);
+        return 'M0,' + (-r) + ' A' + r + ',' + r + ' 0 0 ' + limb + ' 0,' + r +
+               ' A' + rx.toFixed(2) + ',' + r + ' 0 0 ' + term + ' 0,' + (-r) + ' Z';
+    }
+
+    /** Car or flag pin: its tip on the point, turned with the map, the icon itself upright. */
+    function placeEnd(name, c) {
+        var p = ends[name], el = $(name + 'Mark');
+        if (!p) { el.style.display = 'none'; return; }
+        var a = -c * Math.PI / 180;
+        var x = p[0] * Math.cos(a) - p[1] * Math.sin(a) + panX + window.innerWidth / 2;
+        var y = p[0] * Math.sin(a) + p[1] * Math.cos(a) + panY + window.innerHeight / 2;
+        el.style.left = Math.round(x - 13) + 'px';
+        el.style.top = Math.round(y - 34) + 'px';
+        el.style.display = 'block';
     }
 
     function onOrientation(ev) {
@@ -182,6 +265,8 @@
         if (menuItems && !armed) drawMenu(); // recording started/stopped from the phone
         if (m.heading !== undefined) gpsHeading = m.heading;
         if (m.fit !== undefined) fitView = !!m.fit; // only in frames
+        if (m.sun !== undefined) sky.sun = m.sun;
+        if (m.moon !== undefined) sky.moon = m.moon;
         applyRotation();
 
         $('rec').style.display = m.rec ? 'inline-block' : 'none';
@@ -231,6 +316,8 @@
         if (m.img) $('map').src = 'data:image/jpeg;base64,' + m.img;
         else if (m.src) $('map').src = m.src;
         if (!dragging) { panX = 0; panY = 0; } // the new image includes the move
+        ends.car = m.car || null;
+        ends.flag = m.flag || null;
         onStatus(m);
     }
 

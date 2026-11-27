@@ -21,6 +21,18 @@
     <script>
         // Turn mouse wheel / keys into the Tizen events the watch app listens to
         var frame = document.getElementById('screen');
+        // preview.html?watch: behave like the Galaxy Watch 2018 browser (no compass: the map turns with the
+        // walking direction, the arrow points up). Without it, a simulated wrist compass turns the map.
+        var asWatch = location.search.indexOf('watch') >= 0;
+        if (asWatch) {
+            frame.src = '../watch/index.html?browser';
+            // The tall page used for the bezel shows a scrollbar on a PC; the watch shows none
+            frame.addEventListener('load', function () {
+                var st = frame.contentDocument.createElement('style');
+                st.textContent = '::-webkit-scrollbar { display: none; }';
+                frame.contentDocument.head.appendChild(st);
+            });
+        }
         function send(type, detail) {
             var doc = frame.contentDocument;
             var ev = new CustomEvent(type, { detail: detail });
@@ -45,7 +57,7 @@
             && frame.contentDocument.URL !== 'about:blank') hookFrame();
         // Simulated wrist: where the top of the watch points (compass, degrees from north).
         // Slow swing of +/-35 degrees, plus a quarter turn every 30 s, sent like the watch's compass sensor.
-        var wristOn = true, t0 = Date.now();
+        var wristOn = !asWatch, t0 = Date.now();
         function wristHeading() {
             var t = (Date.now() - t0) / 1000;
             return (30 + 90 * Math.floor(t / 30) + 35 * Math.sin(t * 2 * Math.PI / 8) + 3600) % 360;

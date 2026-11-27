@@ -13,6 +13,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Without it, One UI may put BLRando to sleep and stop the GPS during a long hike -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- Self-update from the GitHub releases (AppUpdater) -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION" />
+    <uses-permission android:name="android.permission.ENFORCE_UPDATE_OWNERSHIP" />
 
     <application
         android:name=".App"

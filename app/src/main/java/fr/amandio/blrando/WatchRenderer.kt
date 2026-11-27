@@ -63,6 +63,9 @@ class WatchRenderer {
         val marker: GeoPoint? = null,
         /** Direction of the [marker] arrow, degrees from north; null = unknown, points north. */
         val markerHeading: Float? = null,
+        /** Ends of the reference track (car, checkered flag), placed by the watch itself so they stay upright. */
+        val start: GeoPoint? = null,
+        val finish: GeoPoint? = null,
     )
 
     // Position arrow on a moved view: same arrowhead as the watch page (watch/index.html, #hiker)
@@ -87,6 +90,9 @@ class WatchRenderer {
             // Map drawn north up; the watch turns it with its own compass.
             // heading = walking direction in degrees from north (GPS), null = unknown
             put("northUp", !s.headingUp)
+            // Track ends: [x, y] pixels from the image center (north up), or null
+            put("car", pixel(s, s.start) ?: JSONObject.NULL)
+            put("flag", pixel(s, s.finish) ?: JSONObject.NULL)
             extra() // status fields, heading included
         }
     }
@@ -144,6 +150,17 @@ class WatchRenderer {
         bmp.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, out)
         bmp.recycle()
         return out.toByteArray()
+    }
+
+    /** [p] in pixels from the center of the north-up image, as a JSON [x, y]; null if [p] is null. */
+    private fun pixel(s: Snapshot, p: GeoPoint?): org.json.JSONArray? {
+        p ?: return null
+        val z = floor(s.zoom).toInt()
+        val worldTile = TILE_PX * Math.pow(2.0, s.zoom - z)
+        val n = 1 shl z
+        val x = worldX(p.longitude, n, worldTile) - worldX(s.center.longitude, n, worldTile)
+        val y = worldY(p.latitude, n, worldTile) - worldY(s.center.latitude, n, worldTile)
+        return org.json.JSONArray().put(Math.round(x)).put(Math.round(y))
     }
 
     private fun drawLines(c: Canvas, lines: List<List<GeoPoint>>, n: Int, tilePx: Double, cx: Double, cy: Double, paint: Paint) {

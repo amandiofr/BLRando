@@ -3,6 +3,8 @@
  *   { t:"frame", img:"<jpeg base64>", rec:true|false,
  *     dist:"12.4 km", dur:"3 h 25", off:62 | null,
  *     northUp: true, heading: walking direction in degrees from north (GPS) | null }
+ *     car, flag: [x, y] pixels of the track ends from the image center | null (frames only)
+ *     sun: {az, alt}, moon: {az, alt, phase} in degrees, phase 0..1 (0.5 = full) | absent
  *   The map is north up and centered on the hiker; the watch turns it with its compass
  *   and draws the arrow.
  *   { t:"vibrate", pattern:[...] }
