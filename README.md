@@ -39,7 +39,7 @@ You need an Android 11 phone or newer. BLRando is not on the Play Store.
 2. Open the downloaded file and tap **Install**. If Android or Play Protect asks, allow it.
 3. When BLRando asks for your location, choose **Allow all the time**.
 
-**Updates**: when a new version is out, BLRando offers it when you open it. Tap « Mettre à jour ».
+**Updates**: when a new version is out, BLRando offers it when you open it. Tap **Update**.
 
 ## Use
 
@@ -60,7 +60,7 @@ Nothing to install on the watch.
 1. On the phone, turn on the **mobile hotspot**, set to **2.4 GHz**. No mobile network needed.
 2. Connect the watch to this hotspot (watch settings > Connections > Wi-Fi).
 3. In BLRando, tap the time at the top: it shows an address such as `10.1.2.3:8765`.
-4. On the watch, open **Internet**, type this address, add it to the bookmarks, then tap « Ouvrir la carte ».
+4. On the watch, open **Internet**, type this address, add it to the bookmarks, then tap **Open the map**.
 
 **Next times**: hotspot on, BLRando open, then open the bookmark on the watch.
 
@@ -69,8 +69,6 @@ On the watch:
 - **Turn the bezel** to zoom, **drag** to move the map, **tap** for the menu.
 - **On the edge**: north, the sun with the sunset time, and the moon.
 - The watch and the phone always show the same place.
-- « Plus de liaison avec le téléphone » means the watch lost the phone: check the hotspot and that BLRando is open.
-
 For your privacy, the phone only talks to the watch through its own hotspot, never on a shared Wi-Fi.
 
 ## Advanced use
@@ -100,6 +98,8 @@ For your privacy, the phone only talks to the watch through its own hotspot, nev
 - **On the edge**: the sun and the moon are dimmed when they are below the horizon. The moon shows its phase.
 - **Battery**: the watch vibrates when the phone battery is at 15 % and 5 %.
 - **Two watches** can share the same phone: both show the same map.
+- **"No link with the phone"**: the watch no longer reaches the phone. Check that the hotspot is on and that
+  BLRando is open. If it goes on, press the watch's **Back** button, then tap **Open the map**.
 
 ## For developers
 
