@@ -73,6 +73,34 @@ On the watch:
 
 For your privacy, the phone only talks to the watch through its own hotspot, never on a shared Wi-Fi.
 
+## Advanced use
+
+**Phone**
+
+- **Long press on the folder**: remove the loaded track.
+- **Share a GPX file** to BLRando from another app (mail, file manager, hiking app) to load it.
+- A **checkered flag** marks the end of the track when it doesn't come back to the start.
+- **Lifebuoy**: three long vibrations when you are more than 50 m from the track, repeated every minute,
+  and one short vibration when you are back on it.
+- **Recording**: saved every 30 s, so nothing is lost if the phone dies. When you stop, you can share the file.
+  The time at the top then shows distance · duration · time; the duration includes breaks.
+- **Compass button** blue: the map turns as you walk.
+- **Tap the time at the top**: shows the address for the watch again.
+- **Language**: the phone's language (English, French, German or Portuguese). To choose another one:
+  phone settings > Apps > BLRando > Language.
+- **Updates**: checked the first time you open BLRando each day, never while recording.
+
+**Watch**
+
+- **Bezel**: three clicks = one zoom level.
+- **Dragging** the map turns it north up; your position stays shown by the arrow. The target in the menu
+  brings it back.
+- **Menu**: start and stop need a second tap to confirm. Starting from the watch also turns the lifebuoy on
+  when a track is loaded.
+- **On the edge**: the sun and the moon are dimmed when they are below the horizon. The moon shows its phase.
+- **Battery**: the watch vibrates when the phone battery is at 15 % and 5 %.
+- **Two watches** can share the same phone: both show the same map.
+
 ## For developers
 
 Building, releases and how it works: [docs/TECHNICAL.md](docs/TECHNICAL.md).
