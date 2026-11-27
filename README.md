@@ -1,107 +1,79 @@
 # BLRando
 
-Une carte de randonnée pour téléphone Android, qui s'affiche aussi sur une montre Samsung Galaxy Watch.
+A hiking map for Android phones, also shown on a Samsung Galaxy Watch.
 
-- Tu charges le tracé de ta rando : il s'affiche en rose sur la carte. Une **voiture** marque le départ, un
-  **drapeau à damier** l'arrivée (sauf si c'est une boucle).
-- La **bouée** te prévient en vibrant si tu t'éloignes de plus de 50 m du tracé.
-- Tu peux **enregistrer** ta sortie : le chemin parcouru s'affiche en bleu.
-- Sur la montre, tu vois la carte, ta position, le nord, le soleil avec l'heure du coucher et la lune, sans sortir
-  le téléphone de ta poche.
+- Load the track of your hike: it shows on the map, with a **car** at the start.
+- **Google Maps** takes you to the start: a long press on the map opens the directions.
+- The **lifebuoy** vibrates when you stray from the track.
+- You can **record** your hike.
+- On the **watch**, you see the map and where you are, with the phone in your pocket.
 
-La carte est la carte topographique OpenTopoMap, la même en France, en Allemagne et ailleurs.
+The map is OpenTopoMap, a hiking map that covers France, Germany and the rest of the world.
+The app is in French.
 
-## Captures d'écran
+## Screenshots
 
-**Sur le téléphone** : en enregistrement, le tracé entier, et une alerte « hors trace ».
-
-<p>
-<img src="docs/screenshots/phone_record.jpg" width="240" alt="Téléphone : enregistrement le long du tracé">
-<img src="docs/screenshots/phone_fit.jpg" width="240" alt="Téléphone : le tracé entier">
-<img src="docs/screenshots/phone_off.jpg" width="240" alt="Téléphone : alerte hors trace">
-</p>
-
-**Sur la montre** : le nord, le soleil, l'heure du coucher et la lune sur le bord, la voiture au départ ; puis le
-suivi, le menu, la confirmation d'arrêt, le tracé entier et l'alerte « hors trace ».
+**Phone**: recording, the whole track, off the track.
 
 <p>
-<img src="docs/screenshots/watch_sky.png" width="180" alt="Montre : nord, soleil, heure du coucher et lune sur le bord, voiture au départ">
-<img src="docs/screenshots/watch_follow.png" width="180" alt="Montre : suivi">
-<img src="docs/screenshots/watch_menu.png" width="180" alt="Montre : menu">
-<img src="docs/screenshots/watch_confirm.png" width="180" alt="Montre : confirmation d'arrêt">
-<img src="docs/screenshots/watch_fit.png" width="180" alt="Montre : tracé entier">
-<img src="docs/screenshots/watch_off.png" width="180" alt="Montre : hors trace">
+<img src="docs/screenshots/phone_record.jpg" width="240" alt="Phone: recording along the track">
+<img src="docs/screenshots/phone_fit.jpg" width="240" alt="Phone: the whole track">
+<img src="docs/screenshots/phone_off.jpg" width="240" alt="Phone: off the track">
 </p>
 
-## Installer l'appli sur le téléphone
+**Watch**: north, sun, sunset time and moon on the edge; following, menu, stop, whole track, off the track.
 
-Il faut un téléphone Android 11 ou plus récent. BLRando n'est pas sur le Play Store : on le télécharge ici.
+<p>
+<img src="docs/screenshots/watch_sky.png" width="180" alt="Watch: north, sun, sunset time and moon on the edge, car at the start">
+<img src="docs/screenshots/watch_follow.png" width="180" alt="Watch: following">
+<img src="docs/screenshots/watch_menu.png" width="180" alt="Watch: menu">
+<img src="docs/screenshots/watch_confirm.png" width="180" alt="Watch: stop">
+<img src="docs/screenshots/watch_fit.png" width="180" alt="Watch: whole track">
+<img src="docs/screenshots/watch_off.png" width="180" alt="Watch: off the track">
+</p>
 
-1. Sur le téléphone, ouvre ce lien : **[télécharger BLRando](https://github.com/amandiofr/BLRando/releases/latest/download/BLRando.apk)**.
-2. Ouvre le fichier téléchargé (`BLRando.apk`).
-3. Android te demande d'autoriser ton navigateur à installer des applis : accepte, puis appuie sur **Installer**.
-   Si Play Protect affiche un avertissement, choisis **Installer quand même**.
-4. Au premier lancement, réponds **Toujours autoriser** pour la position (sinon le suivi s'arrête quand l'écran
-   s'éteint) et **Autoriser** pour les notifications.
+## Install
 
-**Mises à jour** : quand une nouvelle version sort, BLRando te la propose la première fois que tu l'ouvres dans
-la journée. Appuie sur **Mettre à jour**. La première fois, Android te demande d'autoriser BLRando à installer des
-applis : accepte.
+You need an Android 11 phone or newer. BLRando is not on the Play Store.
 
-## Utiliser l'appli sur le téléphone
+1. On the phone, open this link: **[download BLRando](https://github.com/amandiofr/BLRando/releases/latest/download/BLRando.apk)**.
+2. Open the downloaded file and tap **Install**. If Android or Play Protect asks, allow it.
+3. When BLRando asks for your location, choose **Allow all the time**.
 
-**Charger un tracé** : appuie sur le **dossier** en bas et choisis un fichier GPX (celui que tu as téléchargé sur
-un site de randonnée, par exemple). Depuis une autre appli, tu peux aussi faire « Partager » vers BLRando.
-Un appui long sur le dossier retire le tracé.
+**Updates**: when a new version is out, BLRando offers it when you open it. Tap « Mettre à jour ».
 
-Les boutons :
+## Use
 
-- **Bouée** : allume l'alerte. Si tu t'éloignes de plus de 50 m du tracé, le téléphone vibre trois fois, et
-  recommence chaque minute. Quand tu reviens sur le tracé, une petite vibration te le dit.
-- **Point rouge** : démarre l'enregistrement de ta sortie (il faut confirmer). Le bouton devient un carré pour
-  arrêter. Ta sortie est rangée dans le dossier **Téléchargements/BLRando** du téléphone.
-- **Boussole** (en bas à gauche) : la carte reste le nord en haut, ou tourne dans le sens de la marche (bleu).
-- **Cible** (à droite) : revenir sur ta position.
-- **Quatre flèches** (à droite) : voir tout le tracé.
-- En haut : l'heure, et pendant un enregistrement la distance et la durée.
-- Un appui long sur la carte ouvre un itinéraire Google Maps jusqu'à ce point.
+- **Folder** (bottom): load a track (GPX file).
+- **Lifebuoy**: turns the off-track alert on or off.
+- **Red dot**: start or stop recording. Your hikes go to the phone's **Download/BLRando** folder.
+- **Compass**: north up, or the map turns as you walk.
+- **Target**: back to where you are. **Four arrows**: the whole track.
+- **Long press on the map**: directions in Google Maps.
 
-## La montre (facultatif)
+## The watch (optional)
 
-Il faut une montre Samsung Galaxy Watch avec le navigateur **Internet** de Samsung (par exemple la Galaxy Watch de
-2018). La montre n'a rien à installer : elle affiche une page que le téléphone lui envoie.
+You need a Samsung Galaxy Watch with Samsung's **Internet** browser (for example the 2018 Galaxy Watch).
+Nothing to install on the watch.
 
-**La première fois :**
+**First time:**
 
-1. Sur le téléphone, active le **point d'accès mobile** : Paramètres > Connexions > Point d'accès mobile et modem.
-   Dans les réglages du point d'accès, choisis la bande **2,4 GHz** (la montre ne voit pas le 5 GHz).
-2. Sur la montre, connecte-toi à ce point d'accès : Paramètres > Connexions > Wi-Fi.
-   Pas besoin de réseau mobile ni d'Internet : ça marche aussi en pleine montagne.
-3. Dans BLRando, touche le **bandeau de l'heure** en haut : il affiche une adresse comme `10.1.2.3:8765`.
-4. Sur la montre, ouvre **Internet** et tape cette adresse. Ajoute la page aux favoris, puis touche
-   **Ouvrir la carte**.
+1. On the phone, turn on the **mobile hotspot**, set to **2.4 GHz**. No mobile network needed.
+2. Connect the watch to this hotspot (watch settings > Connections > Wi-Fi).
+3. In BLRando, tap the time at the top: it shows an address such as `10.1.2.3:8765`.
+4. On the watch, open **Internet**, type this address, add it to the bookmarks, then tap « Ouvrir la carte ».
 
-**Les fois suivantes** : point d'accès allumé, BLRando ouvert, puis sur la montre ouvre Internet et le favori.
+**Next times**: hotspot on, BLRando open, then open the bookmark on the watch.
 
-Sur la montre :
+On the watch:
 
-- **Tourner la lunette** : zoomer ou dézoomer.
-- **Glisser le doigt** : déplacer la carte. Le nord revient en haut et ta position reste dessinée par la flèche.
-- **Toucher la carte** : le menu.
-  - flèche : fermer le menu ;
-  - point rouge ou carré rouge : démarrer ou arrêter l'enregistrement (toucher une deuxième fois pour confirmer) ;
-  - cible : revenir sur ta position ;
-  - quatre flèches : voir tout le tracé.
-- **Sur le bord** : le N montre le nord, le soleil et la lune sont dans leur vraie direction (pâles quand ils sont
-  sous l'horizon), et l'heure du coucher du soleil est écrite à côté du soleil. La lune montre sa phase.
-- Le téléphone et la montre montrent toujours le même endroit : ce que tu fais sur l'un se fait sur l'autre.
-- **Hors trace** : anneau rouge, distance et vibrations.
-- **« Plus de liaison avec le téléphone »** : la montre ne joint plus le téléphone. Vérifie que le point d'accès
-  est allumé et que BLRando est ouvert.
+- **Turn the bezel** to zoom, **drag** to move the map, **tap** for the menu.
+- **On the edge**: north, the sun with the sunset time, and the moon.
+- The watch and the phone always show the same place.
+- « Plus de liaison avec le téléphone » means the watch lost the phone: check the hotspot and that BLRando is open.
 
-**Vie privée** : le téléphone n'envoie la carte que par son propre point d'accès, jamais sur un Wi-Fi partagé
-(maison, bureau, hôtel), où quelqu'un d'autre pourrait voir ta position.
+For your privacy, the phone only talks to the watch through its own hotspot, never on a shared Wi-Fi.
 
-## Pour les développeurs
+## For developers
 
-Compilation, publication et fonctionnement interne : [docs/TECHNICAL.md](docs/TECHNICAL.md).
+Building, releases and how it works: [docs/TECHNICAL.md](docs/TECHNICAL.md).
