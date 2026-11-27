@@ -25,8 +25,8 @@ android {
         minSdk = 30
         // Play Protect blocks sideloaded apps that target an old API level
         targetSdk = 35
-        versionCode = 100
-        versionName = "1.0.0"
+        versionCode = 110
+        versionName = "1.1.0"
     }
     buildTypes {
         release {
