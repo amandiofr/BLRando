@@ -110,7 +110,10 @@
   dl.buttons dd { margin: 0; color: var(--muted); }
 
   footer { margin-top: 56px; padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
-  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; }
+  .coffee { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; color: #fff;
+            background: #d4572a; padding: 8px 18px; border-radius: 24px; }
+  .coffee:hover { background: #bf4a20; }
 
   @media (max-width: 520px) {
     header { padding: 40px 0 48px; }
@@ -245,6 +248,7 @@
   <div class="wrap">
     <span><a href="https://amandiofr.github.io/">All apps</a> · <a href="https://github.com/amandiofr/BLRando">source code on GitHub</a></span>
     <span>Map © OpenStreetMap contributors, SRTM · © OpenTopoMap (CC-BY-SA)</span>
+    <a class="coffee" href="https://ko-fi.com/amandiofr">&#9749; Buy me a coffee</a>
   </div>
 </footer>
 

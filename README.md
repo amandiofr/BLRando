@@ -1,5 +1,7 @@
 # BLRando
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/amandiofr)
+
 A hiking map for Android phones, also shown on a Samsung Galaxy Watch.
 
 - Load the track of your hike: it shows on the map, with a **car** at the start.
