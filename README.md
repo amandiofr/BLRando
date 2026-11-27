@@ -9,7 +9,6 @@ A hiking map for Android phones, also shown on a Samsung Galaxy Watch.
 - On the **watch**, you see the map and where you are, with the phone in your pocket.
 
 The map is OpenTopoMap, a hiking map that covers France, Germany and the rest of the world.
-The app is in French.
 
 ## Screenshots
 
