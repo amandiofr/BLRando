@@ -44,11 +44,15 @@
   /* Hero */
   header {
     position: relative; background: var(--hero-bg); color: var(--hero-text);
-    padding: 60px 0 64px; text-align: center;
+    padding: 76px 0 64px; text-align: center;
   }
-  header nav { position: absolute; top: 14px; left: 0; right: 0; text-align: left; }
-  header nav a { color: #fff; opacity: 0.85; font-size: 15px; text-decoration: none; }
-  header nav a:hover { opacity: 1; }
+  header nav { position: absolute; top: 16px; left: 0; right: 0; text-align: left; }
+  header nav a {
+    display: inline-flex; align-items: center; gap: 6px; color: #fff; font-weight: 600; font-size: 16px;
+    text-decoration: none; padding: 8px 16px 8px 12px; border-radius: 24px;
+    background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+  header nav a:hover { background: rgba(255, 255, 255, 0.28); }
   header img.icon { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3); }
   header h1 { margin: 18px 0 6px; font-size: 42px; letter-spacing: -0.5px; }
   header p.tagline { margin: 0 auto 28px; max-width: 560px; font-size: 20px; opacity: 0.95; }
