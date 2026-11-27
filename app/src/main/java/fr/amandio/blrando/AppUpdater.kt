@@ -12,7 +12,6 @@ import android.content.pm.PackageInstaller
 import android.net.Uri
 import android.os.Build
 import android.util.Log
-import android.widget.Toast
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -63,14 +62,14 @@ object AppUpdater {
     }
 
     private fun offer(activity: Activity, latest: String, current: String, notes: String, apkUrl: String?, page: String) {
-        val text = "La version $latest est disponible (tu as la $current)." + if (notes.isNotEmpty()) "\n\n$notes" else ""
+        val text = activity.getString(R.string.update_text, latest, current) + if (notes.isNotEmpty()) "\n\n$notes" else ""
         AlertDialog.Builder(activity)
-            .setTitle("Nouvelle version de BLRando")
+            .setTitle(R.string.update_title)
             .setMessage(text)
-            .setPositiveButton("Mettre à jour") { _, _ ->
+            .setPositiveButton(R.string.update_now) { _, _ ->
                 if (apkUrl != null) install(activity, apkUrl, page) else openPage(activity, page)
             }
-            .setNegativeButton("Plus tard", null)
+            .setNegativeButton(R.string.later, null)
             .show()
     }
 
@@ -80,7 +79,7 @@ object AppUpdater {
      */
     private fun install(activity: Activity, apkUrl: String, page: String) {
         val app = activity.applicationContext
-        Toast.makeText(app, "Téléchargement de la mise à jour…", Toast.LENGTH_SHORT).show()
+        Toasts.show(app, app.getString(R.string.update_downloading), long = false)
         registerStatusReceiver(app)
         Thread {
             val installer = app.packageManager.packageInstaller
@@ -141,8 +140,8 @@ object AppUpdater {
                     confirm?.let { context.startActivity(it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
                 }
                 PackageInstaller.STATUS_SUCCESS -> Unit // the app is being replaced
-                else -> Toast.makeText(context, "Mise à jour impossible : " +
-                    (intent.getStringExtra(PackageInstaller.EXTRA_STATUS_MESSAGE) ?: "erreur inconnue"), Toast.LENGTH_LONG).show()
+                else -> Toasts.show(context, context.getString(R.string.update_failed,
+                    intent.getStringExtra(PackageInstaller.EXTRA_STATUS_MESSAGE) ?: context.getString(R.string.unknown_error)))
             }
         }
     }

@@ -91,10 +91,10 @@ object WatchServer {
                 val out = s.getOutputStream()
                 when {
                     // Home: a plain page the watch browser can bookmark, with a button to the map
-                    route == "/" -> asset(ctx, out, "home.html")
+                    route == "/" -> home(ctx, out)
                     route == "/w" || route == "/w/" -> redirect(out, "/watch/index.html")
-                    route == "/frame" -> { wakeFeed(ctx); send(out, 200, "application/json", lastFrame.toByteArray()) }
-                    route == "/beat" -> { wakeFeed(ctx); send(out, 200, "application/json", lastBeat.toByteArray()) }
+                    route == "/frame" -> { wakeFeed(ctx, pageId(query)); send(out, 200, "application/json", lastFrame.toByteArray()) }
+                    route == "/beat" -> { wakeFeed(ctx, pageId(query)); send(out, 200, "application/json", lastBeat.toByteArray()) }
                     route == "/msg" -> {
                         val b = query?.split("&")?.firstOrNull { it.startsWith("b=") }?.substring(2)
                         if (b != null) {
@@ -120,14 +120,19 @@ object WatchServer {
      * The watch is polling but nothing feeds it (BLRando was reinstalled or killed while the watch
      * page stayed open, so its "hello" is long gone): act as if it had just said hello.
      */
-    private fun wakeFeed(ctx: Context) {
-        lastPoll = System.currentTimeMillis()
-        if (TrackingService.feed != null) return
+    private fun wakeFeed(ctx: Context, id: String) {
         val now = System.currentTimeMillis()
+        lastPoll = now
+        Session.watchPolls[id] = now
+        if (TrackingService.feed != null) return
         if (now - lastWake < 10_000) return
         lastWake = now
-        main.post { WatchLink.onMessage(ctx, JSONObject().put("t", "hello")) }
+        main.post { WatchLink.onMessage(ctx, JSONObject().put("t", "hello").put("id", id)) }
     }
+
+    /** "id" parameter of a poll (/frame?id=...): which watch page asks; "" for old pages. */
+    private fun pageId(query: String?): String =
+        query?.split("&")?.firstOrNull { it.startsWith("id=") }?.substring(3)?.take(32) ?: ""
 
     private fun asset(ctx: Context, out: OutputStream, name: String) {
         if (name.contains("..") || name.isEmpty()) return send(out, 404, "text/plain", ByteArray(0))
@@ -143,6 +148,14 @@ object WatchServer {
             else -> "application/octet-stream"
         }
         send(out, 200, type, bytes)
+    }
+
+    /** Home page with its texts in the phone's language. */
+    private fun home(ctx: Context, out: OutputStream) {
+        val html = ctx.assets.open("watch/home.html").use { it.readBytes() }.toString(Charsets.UTF_8)
+            .replace("{{open_map}}", ctx.getString(R.string.home_open_map))
+            .replace("{{bookmark}}", ctx.getString(R.string.home_bookmark))
+        send(out, 200, "text/html; charset=utf-8", html.toByteArray())
     }
 
     private fun redirect(out: OutputStream, to: String) {

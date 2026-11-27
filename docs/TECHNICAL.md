@@ -1,6 +1,6 @@
 # BLRando — technical notes
 
-For developers. The user guide is the [README](../README.md) (in French, like the app).
+For developers. The user guide is the [README](../README.md).
 
 ## Build from the sources
 
@@ -25,6 +25,13 @@ The README's download link points to `releases/latest/download/BLRando.apk`.
 release builds (a debug build is signed with another key). It offers the new version and installs it through a
 `PackageInstaller` session; if that fails, it opens the release page.
 
+## Languages
+
+English (default, `res/values`), French, German and Portuguese (`values-fr`, `values-de`, `values-pt`), following
+the phone's language; Android's per-app language setting can override it (`res/xml/locales_config.xml`).
+The phone sends its resolved language (`lang_code`) to the watch in every message, and `watch/i18n.js` holds
+the watch page's texts. The watch home page (`watch/home.html`) is filled in by `WatchServer`.
+
 ## Why a web page on the watch
 
 Samsung no longer issues the developer certificates a Tizen watch trusts, so a real Tizen app can't be installed
@@ -37,6 +44,10 @@ The watch's Internet browser displays a page (`watch/`, bundled as `assets/watch
 - `/beat`: a small status every 10 s (recording, distance, off track, GPS lost, phone battery, sun and moon
   azimuth and altitude, moon phase, sunset time — `Sky`, SunCalc formulas);
 - `/msg?b=<base64 JSON>`: watch to phone messages (zoom, pan, menu commands), handled by `WatchLink`.
+
+Several watches can share the phone (two hikers): each page picks a random id, sent with its polls
+(`/frame?id=`) and messages. The phone draws images while at least one page that still polls has its screen on,
+and echoes each page's own last pan in `pans`. The view itself (zoom, pan, fit) is shared.
 
 The page reloads itself when BLRando is updated (`ver` field). It only answers requests coming through the
 hotspot interface (or loopback, for `adb forward` tests), never a shared Wi-Fi.

@@ -28,7 +28,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
@@ -269,9 +268,9 @@ class MainActivity : Activity() {
                 p ?: return false
                 map.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
                 AlertDialog.Builder(this@MainActivity)
-                    .setMessage("Ouvrir Google Maps avec un itinéraire vers ce point ?")
-                    .setPositiveButton("Itinéraire") { _, _ -> openItinerary(p) }
-                    .setNegativeButton("Annuler", null)
+                    .setMessage(R.string.itinerary_question)
+                    .setPositiveButton(R.string.itinerary) { _, _ -> openItinerary(p) }
+                    .setNegativeButton(R.string.cancel, null)
                     .show()
                 return true
             }
@@ -368,14 +367,12 @@ class MainActivity : Activity() {
     private fun showWatchAddress() {
         val url = WatchServer.url()
         AlertDialog.Builder(this)
-            .setTitle("Montre")
+            .setTitle(R.string.watch_title)
             .setMessage(
-                if (url != null) "Dans le navigateur Internet de la montre :\n\n${url.removePrefix("http://")}\n\n" +
-                    "La montre doit être connectée au point d'accès de ce téléphone."
-                else "Point d'accès éteint : active le point d'accès mobile du téléphone et connectes-y la montre.\n\n" +
-                    "Pour ta sécurité, la montre n'est servie que par le point d'accès, jamais par un Wi-Fi partagé."
+                if (url != null) getString(R.string.watch_address, url.removePrefix("http://"))
+                else getString(R.string.hotspot_off)
             )
-            .setPositiveButton("OK", null)
+            .setPositiveButton(R.string.ok, null)
             .show()
     }
 
@@ -390,7 +387,7 @@ class MainActivity : Activity() {
             try {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("geo:$dest?q=$dest")))
             } catch (_: android.content.ActivityNotFoundException) {
-                toast("Aucune application de cartes")
+                toast(getString(R.string.no_maps_app))
             }
         }
     }
@@ -508,7 +505,7 @@ class MainActivity : Activity() {
         } else now
 
         if (Session.guiding && Session.offTrack) {
-            offTrackView.text = "⚠ Hors trace · ${Session.distanceToReference?.toInt() ?: "?"} m"
+            offTrackView.text = getString(R.string.off_track, Session.distanceToReference?.toInt()?.toString() ?: "?")
             offTrackView.visibility = View.VISIBLE
         } else {
             offTrackView.visibility = View.GONE
@@ -522,7 +519,7 @@ class MainActivity : Activity() {
 
         // Idle: record. Recording: stop.
         btnRecord.setImageResource(if (Session.recording) R.drawable.ic_stop else R.drawable.ic_record)
-        btnRecord.contentDescription = if (Session.recording) "Arrêter l'enregistrement" else "Enregistrer"
+        btnRecord.contentDescription = getString(if (Session.recording) R.string.stop_recording else R.string.record)
         // No new reference while recording: one button less
         findViewById<View>(R.id.btnTrace).visibility = if (Session.recording) View.GONE else View.VISIBLE
 
@@ -546,7 +543,7 @@ class MainActivity : Activity() {
     private fun toggleOrientation() {
         Session.headingUp = !Session.headingUp
         if (!Session.headingUp) map.mapOrientation = 0f
-        toast(if (Session.headingUp) "Carte dans le sens de la marche" else "Carte orientée nord")
+        toast(getString(if (Session.headingUp) R.string.map_heading_up else R.string.map_north_up))
         onSessionChanged()
     }
 
@@ -557,32 +554,32 @@ class MainActivity : Activity() {
         if (Session.guiding) {
             Session.setGuiding(false)
             afterSwitch()
-            toast("Bouée désactivée")
+            toast(getString(R.string.buoy_off))
             return
         }
         if (Session.reference.isEmpty()) {
-            toast("Aucune trace chargée")
+            toast(getString(R.string.no_track))
             return
         }
         withLocation {
             Session.setGuiding(true)
             afterSwitch()
-            toast("Bouée activée")
+            toast(getString(R.string.buoy_on))
         }
     }
 
     /** Confirmation without a question: the button text says it all. */
-    private fun confirm(action: String, onYes: () -> Unit) {
+    private fun confirm(action: Int, onYes: () -> Unit) {
         AlertDialog.Builder(this)
             .setPositiveButton(action) { _, _ -> onYes() }
-            .setNegativeButton("Annuler", null)
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
     /** Record button: start (new file AAAAMMJJ_HHMM.gpx), or stop while recording. Independent from the lifebuoy. */
     private fun onRecordButton() {
         if (Session.recording) { onStopButton(); return }
-        confirm("Enregistrer") {
+        confirm(R.string.record) {
             withLocation {
                 Session.startRecording()
                 afterSwitch()
@@ -593,21 +590,21 @@ class MainActivity : Activity() {
 
     private fun onStopButton() {
         if (!Session.recording) return
-        confirm("Arrêter") {
+        confirm(R.string.stop) {
             val name = Session.recordName
             val enough = Session.trail.size >= 2
-            val km = String.format(Locale.FRANCE, "%.1f", Session.distanceM / 1000)
+            val km = String.format(Locale.getDefault(), "%.1f", Session.distanceM / 1000)
             val uri = Session.lastRecordUri
             Session.stopRecording()
             afterSwitch() // the service writes the final file as it stops
             if (!enough || uri == null) {
-                toast("Trace trop courte, rien n'a été enregistré")
+                toast(getString(R.string.track_too_short))
                 return@confirm
             }
             AlertDialog.Builder(this)
-                .setMessage("Trace enregistrée : $km km\nTéléchargements/BLRando/$name.gpx")
-                .setPositiveButton("Partager") { _, _ -> shareTrack(uri, name) }
-                .setNegativeButton("OK", null)
+                .setMessage(getString(R.string.track_saved, km, name))
+                .setPositiveButton(R.string.share) { _, _ -> shareTrack(uri, name) }
+                .setNegativeButton(R.string.ok, null)
                 .show()
         }
     }
@@ -617,9 +614,9 @@ class MainActivity : Activity() {
         val send = Intent(Intent.ACTION_SEND)
             .setType("application/gpx+xml")
             .putExtra(Intent.EXTRA_STREAM, uri)
-            .putExtra(Intent.EXTRA_SUBJECT, "Trace $name")
+            .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.track_subject, name))
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        startActivity(Intent.createChooser(send, "Partager la trace"))
+        startActivity(Intent.createChooser(send, getString(R.string.share_track)))
     }
 
     private fun afterSwitch() {
@@ -663,13 +660,13 @@ class MainActivity : Activity() {
                 val track = tmp.inputStream().use { Gpx.parse(it) }
                 if (track.segments.isEmpty()) {
                     tmp.delete()
-                    runOnUiThread { toast("Aucune trace trouvée dans ce fichier") }
+                    runOnUiThread { toast(getString(R.string.no_track_in_file)) }
                     return@Thread
                 }
                 tmp.renameTo(refFile)
                 runOnUiThread { showReference(track, fitAfter = true) }
             } catch (e: Exception) {
-                runOnUiThread { toast("Fichier illisible : ${e.message}") }
+                runOnUiThread { toast(getString(R.string.unreadable_file, e.message ?: "")) }
             }
         }.start()
     }
@@ -689,7 +686,7 @@ class MainActivity : Activity() {
         drawReference()
         if (fitAfter) {
             // Just imported: frame it and fetch its map for offline use
-            toast("Trace : ${track.name ?: "sans nom"}")
+            toast(getString(R.string.track_loaded, track.name ?: getString(R.string.unnamed)))
             fitAll()
             TilePrefetcher.start(this, track.segments)
         }
@@ -736,8 +733,8 @@ class MainActivity : Activity() {
     private fun askRemoveReference() {
         if (Session.reference.isEmpty()) return
         AlertDialog.Builder(this)
-            .setMessage("Retirer la trace de référence « ${Session.referenceName ?: "sans nom"} » ?")
-            .setPositiveButton("Retirer") { _, _ ->
+            .setMessage(getString(R.string.remove_track_question, Session.referenceName ?: getString(R.string.unnamed)))
+            .setPositiveButton(R.string.remove) { _, _ ->
                 refFile.delete()
                 refLines.forEach { map.overlays.remove(it) }
                 refLines.clear()
@@ -751,7 +748,7 @@ class MainActivity : Activity() {
                 }
                 map.invalidate()
             }
-            .setNegativeButton("Annuler", null)
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
@@ -795,8 +792,8 @@ class MainActivity : Activity() {
         }
         batteryAsked = true
         AlertDialog.Builder(this)
-            .setMessage("Pour que le GPS ne soit pas coupé pendant la rando, autorise BLRando à fonctionner sans restriction de batterie.")
-            .setPositiveButton("Autoriser") { _, _ ->
+            .setMessage(R.string.battery_question)
+            .setPositiveButton(R.string.allow) { _, _ ->
                 try {
                     startActivity(Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
                         Uri.parse("package:$packageName")))
@@ -804,7 +801,7 @@ class MainActivity : Activity() {
                     startActivity(Intent(android.provider.Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
                 }
             }
-            .setNegativeButton("Plus tard", null)
+            .setNegativeButton(R.string.later, null)
             .setOnDismissListener { askBackgroundLocation() }
             .show()
     }
@@ -820,11 +817,11 @@ class MainActivity : Activity() {
             checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) return
         backgroundAsked = true
         AlertDialog.Builder(this)
-            .setMessage("Pour que la montre puisse démarrer le suivi téléphone en poche, choisis « Toujours autoriser » pour la localisation.")
-            .setPositiveButton("Continuer") { _, _ ->
+            .setMessage(R.string.location_always_question)
+            .setPositiveButton(R.string.continue_) { _, _ ->
                 requestPermissions(arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), REQ_BG)
             }
-            .setNegativeButton("Plus tard", null)
+            .setNegativeButton(R.string.later, null)
             .show()
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -834,7 +831,7 @@ class MainActivity : Activity() {
             startUiLocation()
             pendingAfterPermission?.invoke() ?: askBatteryExemption()
         } else {
-            toast("BLRando a besoin de la localisation pour afficher ta position")
+            toast(getString(R.string.location_needed))
         }
         pendingAfterPermission = null
     }
@@ -851,7 +848,7 @@ class MainActivity : Activity() {
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 0f, uiLocationListener, Looper.getMainLooper())
     }
 
-    private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+    private fun toast(msg: String) = Toasts.show(this, msg)
 
     companion object {
         private const val REQ_OPEN = 1

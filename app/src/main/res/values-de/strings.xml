@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lang_code" translatable="false">de</string>
+
+    <string name="channel_tracking">Wanderverfolgung</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="later">Später</string>
+    <string name="allow">Erlauben</string>
+    <string name="continue_">Weiter</string>
+    <string name="unnamed">ohne Namen</string>
+
+    <string name="recenter">Zurück zu meiner Position</string>
+    <string name="show_all">Ganze Route anzeigen</string>
+    <string name="map_orientation">Kartenausrichtung</string>
+    <string name="open_track">Route öffnen</string>
+    <string name="lifebuoy">Rettungsring</string>
+    <string name="record">Aufzeichnen</string>
+    <string name="stop_recording">Aufzeichnung beenden</string>
+
+    <string name="itinerary_question">Google Maps mit einer Route zu diesem Punkt öffnen?</string>
+    <string name="itinerary">Route</string>
+    <string name="no_maps_app">Keine Karten-App</string>
+
+    <string name="watch_title">Uhr</string>
+    <string name="watch_address">Im Internet-Browser der Uhr:\n\n%1$s\n\nDie Uhr muss mit dem Hotspot dieses Telefons verbunden sein.</string>
+    <string name="hotspot_off">Hotspot aus: Schalte den mobilen Hotspot des Telefons ein und verbinde die Uhr damit.\n\nZu deiner Sicherheit wird die Uhr nur über den Hotspot versorgt, nie über ein geteiltes WLAN.</string>
+
+    <string name="off_track">⚠ Abseits der Route · %1$s m</string>
+    <string name="map_heading_up">Karte in Gehrichtung</string>
+    <string name="map_north_up">Karte genordet</string>
+    <string name="buoy_on">Rettungsring an</string>
+    <string name="buoy_off">Rettungsring aus</string>
+    <string name="no_track">Keine Route geladen</string>
+    <string name="stop">Beenden</string>
+    <string name="track_too_short">Route zu kurz, nichts wurde gespeichert</string>
+    <string name="track_saved">Route gespeichert: %1$s km\nDownload/BLRando/%2$s.gpx</string>
+    <string name="share">Teilen</string>
+    <string name="track_subject">Route %1$s</string>
+    <string name="share_track">Route teilen</string>
+    <string name="no_track_in_file">Keine Route in dieser Datei gefunden</string>
+    <string name="unreadable_file">Datei nicht lesbar: %1$s</string>
+    <string name="track_loaded">Route: %1$s</string>
+    <string name="remove_track_question">Die Referenzroute „%1$s“ entfernen?</string>
+    <string name="remove">Entfernen</string>
+
+    <string name="battery_question">Damit das GPS während der Wanderung nicht abgeschaltet wird, erlaube BLRando, ohne Akkubeschränkung zu laufen.</string>
+    <string name="location_always_question">Damit die Uhr die Verfolgung mit dem Telefon in der Tasche starten kann, wähle „Immer zulassen“ für den Standort.</string>
+    <string name="location_needed">BLRando braucht deinen Standort, um deine Position anzuzeigen</string>
+
+    <string name="notif_recording">● Aufzeichnung</string>
+    <string name="notif_buoy">Rettungsring aktiv</string>
+    <string name="notif_watch">Uhr verbunden</string>
+    <string name="notif_location">Standort</string>
+    <string name="watch_cannot_start">Die Uhr kann die Verfolgung nicht starten: Öffne BLRando auf dem Telefon</string>
+
+    <string name="update_title">Neue Version von BLRando</string>
+    <string name="update_text">Version %1$s ist verfügbar (du hast %2$s).</string>
+    <string name="update_now">Aktualisieren</string>
+    <string name="update_downloading">Update wird heruntergeladen…</string>
+    <string name="update_failed">Aktualisierung fehlgeschlagen: %1$s</string>
+    <string name="unknown_error">unbekannter Fehler</string>
+
+    <string name="home_open_map">Karte öffnen</string>
+    <string name="home_bookmark">Füge diese Seite zu den Lesezeichen von Internet hinzu, um sie wiederzufinden.</string>
+</resources>

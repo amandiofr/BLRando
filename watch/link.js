@@ -17,6 +17,8 @@
 var Link = (function () {
     'use strict';
     var handlers = [];
+    // This page's id: several watches can share the phone, each one is told apart by it
+    var ID = Math.random().toString(36).slice(2, 10);
     var onTizen = typeof tizen !== 'undefined' && typeof webapis !== 'undefined' && webapis.sa;
 
     function emit(msg) { handlers.forEach(function (h) { h(msg); }); }
@@ -67,8 +69,8 @@ var Link = (function () {
             };
             x.send();
         }
-        setInterval(function () { poll('/frame'); poll('/beat'); }, 1000);
-        poll('/frame');
+        setInterval(function () { poll('/frame?id=' + ID); poll('/beat?id=' + ID); }, 1000);
+        poll('/frame?id=' + ID);
         return {
             // Any watch message goes to the phone (base64 JSON -> adb broadcast -> WatchLink)
             send: function (msg) {
@@ -83,7 +85,8 @@ var Link = (function () {
         : (location.protocol.indexOf('http') === 0 ? bridge() : fakePhone());
 
     return {
+        id: ID,
         onMessage: function (h) { handlers.push(h); },
-        send: function (msg) { if (transport) transport.send(msg); }
+        send: function (msg) { msg.id = ID; if (transport) transport.send(msg); }
     };
 })();

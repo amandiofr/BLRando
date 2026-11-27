@@ -167,14 +167,15 @@ class TrackingService : Service(), LocationListener {
             PendingIntent.FLAG_IMMUTABLE,
         )
         val parts = ArrayList<String>()
-        if (Session.recording) parts.add("● Enregistrement")
+        if (Session.recording) parts.add(getString(R.string.notif_recording))
         if (Session.guiding) parts.add(
-            if (Session.offTrack) "⚠ Hors trace ${Session.distanceToReference?.toInt() ?: "?"} m" else "Bouée active"
+            if (Session.offTrack) getString(R.string.off_track, Session.distanceToReference?.toInt()?.toString() ?: "?")
+            else getString(R.string.notif_buoy)
         )
         return Notification.Builder(this, App.CHANNEL)
             .setSmallIcon(R.drawable.ic_notif)
             .setContentTitle("BLRando")
-            .setContentText(parts.joinToString(" · ").ifEmpty { if (Session.watchConnected) "Montre connectée" else "Localisation" })
+            .setContentText(parts.joinToString(" · ").ifEmpty { getString(if (Session.watchConnected) R.string.notif_watch else R.string.notif_location) })
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setContentIntent(open)
@@ -224,7 +225,7 @@ class TrackingService : Service(), LocationListener {
             val n = Notification.Builder(ctx, App.CHANNEL)
                 .setSmallIcon(R.drawable.ic_notif)
                 .setContentTitle("BLRando")
-                .setContentText("La montre ne peut pas démarrer le suivi : ouvre BLRando sur le téléphone")
+                .setContentText(ctx.getString(R.string.watch_cannot_start))
                 .setContentIntent(open)
                 .setAutoCancel(true)
                 .build()

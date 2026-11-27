@@ -104,6 +104,8 @@ class WatchFeed(private val ctx: Context) {
             o.put("moon", JSONObject().put("az", Math.round(moon.body.azimuth)).put("alt", Math.round(moon.body.altitude))
                 .put("phase", Math.round(moon.phase * 1000) / 1000.0))
         }
+        // Phone language (en, fr, de, pt): the watch page shows its texts in it (watch/i18n.js)
+        o.put("lang", ctx.getString(R.string.lang_code))
         // Changes with each install of BLRando: the watch page reloads itself to get the new version
         o.put("ver", installTime)
     }
@@ -121,10 +123,10 @@ class WatchFeed(private val ctx: Context) {
     }
 
     /** From the watch: map dragged by (dx, dy) screen pixels. The view stops following the hiker. */
-    fun onPan(dx: Double, dy: Double, seq: Int) {
+    fun onPan(dx: Double, dy: Double, seq: Int, watchId: String = "") {
         val c = Session.watchCenter ?: Session.position?.let { GeoPoint(it.latitude, it.longitude) } ?: return
         Session.watchCenter = WatchRenderer.offset(c, Session.watchZoom, -dx, -dy)
-        panSeq = seq
+        panSeqs[watchId] = seq
         viewChanged()
     }
 
@@ -143,8 +145,11 @@ class WatchFeed(private val ctx: Context) {
         Session.notifyChanged()
     }
 
-    /** Last pan applied, echoed in frames: the watch drops its finger offset once a frame includes it. */
-    private var panSeq = 0
+    /**
+     * Last pan applied, for each watch page, echoed in frames: a watch drops its finger offset once a frame
+     * includes its own last pan (one counter per watch: each watch numbers its own pans). Main thread.
+     */
+    private val panSeqs = HashMap<String, Int>()
 
     /** From the watch: bezel turned. Zooms around what the watch shows (the hiker, or the moved view). */
     fun onZoom(delta: Int) {
@@ -176,7 +181,7 @@ class WatchFeed(private val ctx: Context) {
             finish = ends?.second,
         )
         // "fit" (= free view) tells the watch: north up, no arrow at the center
-        val st = JSONObject().also { status(it); it.put("fit", free != null); it.put("panSeq", panSeq) }
+        val st = JSONObject().also { status(it); it.put("fit", free != null); it.put("pans", JSONObject(panSeqs as Map<*, *>)) }
         worker.post {
             try {
                 val json = renderer.frame(snap) {

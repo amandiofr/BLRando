@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lang_code" translatable="false">pt</string>
+
+    <string name="channel_tracking">Seguimento da caminhada</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="later">Mais tarde</string>
+    <string name="allow">Permitir</string>
+    <string name="continue_">Continuar</string>
+    <string name="unnamed">sem nome</string>
+
+    <string name="recenter">Voltar à minha posição</string>
+    <string name="show_all">Mostrar o trilho inteiro</string>
+    <string name="map_orientation">Orientação do mapa</string>
+    <string name="open_track">Abrir um trilho</string>
+    <string name="lifebuoy">Boia de salvação</string>
+    <string name="record">Gravar</string>
+    <string name="stop_recording">Parar a gravação</string>
+
+    <string name="itinerary_question">Abrir o Google Maps com um itinerário até este ponto?</string>
+    <string name="itinerary">Itinerário</string>
+    <string name="no_maps_app">Nenhuma aplicação de mapas</string>
+
+    <string name="watch_title">Relógio</string>
+    <string name="watch_address">No navegador Internet do relógio:\n\n%1$s\n\nO relógio tem de estar ligado ao ponto de acesso deste telemóvel.</string>
+    <string name="hotspot_off">Ponto de acesso desligado: ativa o ponto de acesso móvel do telemóvel e liga-lhe o relógio.\n\nPara tua segurança, o relógio só é servido pelo ponto de acesso, nunca por um Wi-Fi partilhado.</string>
+
+    <string name="off_track">⚠ Fora do trilho · %1$s m</string>
+    <string name="map_heading_up">Mapa no sentido da marcha</string>
+    <string name="map_north_up">Mapa orientado a norte</string>
+    <string name="buoy_on">Boia ativada</string>
+    <string name="buoy_off">Boia desativada</string>
+    <string name="no_track">Nenhum trilho carregado</string>
+    <string name="stop">Parar</string>
+    <string name="track_too_short">Trilho demasiado curto, nada foi guardado</string>
+    <string name="track_saved">Trilho guardado: %1$s km\nTransferências/BLRando/%2$s.gpx</string>
+    <string name="share">Partilhar</string>
+    <string name="track_subject">Trilho %1$s</string>
+    <string name="share_track">Partilhar o trilho</string>
+    <string name="no_track_in_file">Nenhum trilho encontrado neste ficheiro</string>
+    <string name="unreadable_file">Ficheiro ilegível: %1$s</string>
+    <string name="track_loaded">Trilho: %1$s</string>
+    <string name="remove_track_question">Remover o trilho de referência «%1$s»?</string>
+    <string name="remove">Remover</string>
+
+    <string name="battery_question">Para que o GPS não seja cortado durante a caminhada, permite que o BLRando funcione sem restrições de bateria.</string>
+    <string name="location_always_question">Para que o relógio possa iniciar o seguimento com o telemóvel no bolso, escolhe «Permitir sempre» para a localização.</string>
+    <string name="location_needed">O BLRando precisa da localização para mostrar a tua posição</string>
+
+    <string name="notif_recording">● A gravar</string>
+    <string name="notif_buoy">Boia ativa</string>
+    <string name="notif_watch">Relógio ligado</string>
+    <string name="notif_location">Localização</string>
+    <string name="watch_cannot_start">O relógio não consegue iniciar o seguimento: abre o BLRando no telemóvel</string>
+
+    <string name="update_title">Nova versão do BLRando</string>
+    <string name="update_text">A versão %1$s está disponível (tens a %2$s).</string>
+    <string name="update_now">Atualizar</string>
+    <string name="update_downloading">A transferir a atualização…</string>
+    <string name="update_failed">Atualização impossível: %1$s</string>
+    <string name="unknown_error">erro desconhecido</string>
+
+    <string name="home_open_map">Abrir o mapa</string>
+    <string name="home_bookmark">Adiciona esta página aos favoritos do Internet para a voltares a encontrar.</string>
+</resources>

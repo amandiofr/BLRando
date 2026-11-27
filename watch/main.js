@@ -35,10 +35,12 @@
 
     /** Sticky alerts, most important first. */
     function refreshSticky() {
-        if (linkLost) showAlert('⚠ Plus de liaison avec le téléphone', true);
-        else if (wasGpsLost) showAlert('⚠ GPS perdu sur le téléphone', true);
+        if (linkLost) showAlert(I18n.t('linkLost'), true);
+        else if (wasGpsLost) showAlert(I18n.t('gpsLost'), true);
         else $('status').style.display = 'none';
     }
+
+    $('status').textContent = I18n.t('connecting');
 
     // ------------------------------------------------------------------ clock and link watchdog
 
@@ -130,17 +132,13 @@
         placeSky('moon', c);
         placeEnd('car', c);
         placeEnd('flag', c);
+        $('hikerDot').style.display = 'none';
         if (fitView) {
             $('hiker').style.display = 'none';
-            $('hikerDot').style.display = 'none';
-        } else if (gpsHeading === null) {
-            // Direction unknown (standing still since the start): a dot shows the position
-            $('hiker').style.display = 'none';
-            $('hikerDot').style.display = 'block';
         } else {
-            $('hikerDot').style.display = 'none';
+            // Direction unknown (standing still since the start): the arrow points north
             $('hiker').style.display = 'block';
-            $('hiker').style.transform = 'rotate(' + (gpsHeading - c) + 'deg)';
+            $('hiker').style.transform = 'rotate(' + ((gpsHeading === null ? 0 : gpsHeading) - c) + 'deg)';
         }
     }
 
@@ -257,6 +255,11 @@
             if (pageVer === null) pageVer = m.ver;
             else if (m.ver !== pageVer && inBrowser) { location.reload(); return; }
         }
+        // Phone language (it may change in the phone settings): redraw the texts on screen
+        if (m.lang && I18n.set(m.lang)) {
+            refreshSticky();
+            if (menuItems) drawMenu();
+        }
         if (linkLost) { linkLost = false; vibrate(OK_PULSE); refreshSticky(); }
         if (firstMsg) { firstMsg = false; refreshSticky(); } // hides "Connexion au téléphone…"
 
@@ -292,7 +295,7 @@
         if (!gpsLost && wasGpsLost) { wasGpsLost = false; vibrate(OK_PULSE); refreshSticky(); }
 
         // Phone battery: alert once at 15 %, again at 5 %
-        if (m.phoneBatt >= 0) checkBattery(m.phoneBatt, 'Téléphone', function (v) {
+        if (m.phoneBatt >= 0) checkBattery(m.phoneBatt, I18n.t('phone'), function (v) {
             if (v === undefined) return phoneBattAlerted; phoneBattAlerted = v; return v;
         });
     }
@@ -312,7 +315,8 @@
 
     function onFrame(m) {
         // An image drawn before our last finger move would make the map jump back: wait for the next one
-        if (m.panSeq !== undefined && m.panSeq < panSent) { onStatus(m); return; }
+        // pans: the last pan the phone applied for each watch; only ours counts
+        if (m.pans && (m.pans[Link.id] || 0) < panSent) { onStatus(m); return; }
         if (m.img) $('map').src = 'data:image/jpeg;base64,' + m.img;
         else if (m.src) $('map').src = m.src;
         if (!dragging) { panX = 0; panY = 0; } // the new image includes the move
@@ -331,7 +335,7 @@
 
     try {
         tizen.systeminfo.addPropertyValueChangeListener('BATTERY', function (b) {
-            checkBattery(Math.round(b.level * 100), 'Montre', function (v) {
+            checkBattery(Math.round(b.level * 100), I18n.t('watch'), function (v) {
                 if (v === undefined) return watchBattAlerted; watchBattAlerted = v; return v;
             });
         });
@@ -357,13 +361,13 @@
     };
 
     var CONFIRM = {
-        start: function () { return 'Démarrer ?'; },
-        stop: function () { return 'Arrêter ?'; }
+        start: function () { return I18n.t('startQ'); },
+        stop: function () { return I18n.t('stopQ'); }
     };
 
     function menuTitle() {
-        if (!state.rec) return state.hasRef ? 'Trace chargée' : 'Pas d\'enregistrement';
-        return '● Enregistrement';
+        if (!state.rec) return I18n.t(state.hasRef ? 'trackLoaded' : 'notRecording');
+        return I18n.t('recording');
     }
 
     function el(tag, cls, html) {
@@ -415,7 +419,7 @@
 
         // Waiting for confirmation: big hint at the bottom (where the screen is wide) instead of the view buttons
         if (armed) {
-            box.appendChild(el('div', 'mhint')).textContent = 'Toucher encore';
+            box.appendChild(el('div', 'mhint')).textContent = I18n.t('tapAgain');
             return;
         }
         // "Fit" only with a track loaded; "center" alone is then in the middle

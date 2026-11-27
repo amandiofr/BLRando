@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Default language (English): used when the phone language is not French, German or Portuguese -->
+<resources>
+    <!-- Language sent to the watch page (watch/i18n.js) -->
+    <string name="lang_code" translatable="false">en</string>
+
+    <string name="channel_tracking">Hiking tracking</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="later">Later</string>
+    <string name="allow">Allow</string>
+    <string name="continue_">Continue</string>
+    <string name="unnamed">unnamed</string>
+
+    <!-- Map buttons (accessibility) -->
+    <string name="recenter">Back to my position</string>
+    <string name="show_all">Show the whole track</string>
+    <string name="map_orientation">Map orientation</string>
+    <string name="open_track">Open a track</string>
+    <string name="lifebuoy">Lifebuoy</string>
+    <string name="record">Record</string>
+    <string name="stop_recording">Stop recording</string>
+
+    <string name="itinerary_question">Open Google Maps with directions to this point?</string>
+    <string name="itinerary">Directions</string>
+    <string name="no_maps_app">No maps app</string>
+
+    <string name="watch_title">Watch</string>
+    <string name="watch_address">In the watch\'s Internet browser:\n\n%1$s\n\nThe watch must be connected to this phone\'s hotspot.</string>
+    <string name="hotspot_off">Hotspot off: turn on the phone\'s mobile hotspot and connect the watch to it.\n\nFor your safety, the watch is only served through the hotspot, never through a shared Wi-Fi.</string>
+
+    <string name="off_track">⚠ Off track · %1$s m</string>
+    <string name="map_heading_up">Map turns with your walking direction</string>
+    <string name="map_north_up">Map with north up</string>
+    <string name="buoy_on">Lifebuoy on</string>
+    <string name="buoy_off">Lifebuoy off</string>
+    <string name="no_track">No track loaded</string>
+    <string name="stop">Stop</string>
+    <string name="track_too_short">Track too short, nothing was saved</string>
+    <string name="track_saved">Track saved: %1$s km\nDownload/BLRando/%2$s.gpx</string>
+    <string name="share">Share</string>
+    <string name="track_subject">Track %1$s</string>
+    <string name="share_track">Share the track</string>
+    <string name="no_track_in_file">No track found in this file</string>
+    <string name="unreadable_file">Unreadable file: %1$s</string>
+    <string name="track_loaded">Track: %1$s</string>
+    <string name="remove_track_question">Remove the reference track \"%1$s\"?</string>
+    <string name="remove">Remove</string>
+
+    <string name="battery_question">So that the GPS isn\'t cut off during the hike, allow BLRando to run without battery restrictions.</string>
+    <string name="location_always_question">So that the watch can start tracking with the phone in your pocket, choose \"Allow all the time\" for location.</string>
+    <string name="location_needed">BLRando needs your location to show where you are</string>
+
+    <!-- Tracking notification -->
+    <string name="notif_recording">● Recording</string>
+    <string name="notif_buoy">Lifebuoy on</string>
+    <string name="notif_watch">Watch connected</string>
+    <string name="notif_location">Location</string>
+    <string name="watch_cannot_start">The watch can\'t start tracking: open BLRando on the phone</string>
+
+    <!-- Self-update -->
+    <string name="update_title">New version of BLRando</string>
+    <string name="update_text">Version %1$s is available (you have %2$s).</string>
+    <string name="update_now">Update</string>
+    <string name="update_downloading">Downloading the update…</string>
+    <string name="update_failed">Update failed: %1$s</string>
+    <string name="unknown_error">unknown error</string>
+
+    <!-- Watch home page (watch/home.html) -->
+    <string name="home_open_map">Open the map</string>
+    <string name="home_bookmark">Add this page to the Internet bookmarks to find it again.</string>
+</resources>

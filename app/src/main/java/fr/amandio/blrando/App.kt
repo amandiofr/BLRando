@@ -25,7 +25,7 @@ class App : Application() {
         cfg.expirationOverrideDuration = 30L * 24 * 3600 * 1000
 
         getSystemService(NotificationManager::class.java).createNotificationChannel(
-            NotificationChannel(CHANNEL, "Suivi de randonnée", NotificationManager.IMPORTANCE_LOW)
+            NotificationChannel(CHANNEL, getString(R.string.channel_tracking), NotificationManager.IMPORTANCE_LOW)
         )
     }
 

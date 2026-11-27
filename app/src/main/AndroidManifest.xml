@@ -23,6 +23,7 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="BLRando"
+        android:localeConfig="@xml/locales_config"
         android:theme="@style/AppTheme">
 
         <activity

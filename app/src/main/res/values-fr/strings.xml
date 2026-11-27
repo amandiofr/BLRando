@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lang_code" translatable="false">fr</string>
+
+    <string name="channel_tracking">Suivi de randonnée</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
+    <string name="later">Plus tard</string>
+    <string name="allow">Autoriser</string>
+    <string name="continue_">Continuer</string>
+    <string name="unnamed">sans nom</string>
+
+    <string name="recenter">Recentrer</string>
+    <string name="show_all">Tout afficher</string>
+    <string name="map_orientation">Orientation de la carte</string>
+    <string name="open_track">Ouvrir une trace</string>
+    <string name="lifebuoy">Bouée de sauvetage</string>
+    <string name="record">Enregistrer</string>
+    <string name="stop_recording">Arrêter l\'enregistrement</string>
+
+    <string name="itinerary_question">Ouvrir Google Maps avec un itinéraire vers ce point ?</string>
+    <string name="itinerary">Itinéraire</string>
+    <string name="no_maps_app">Aucune application de cartes</string>
+
+    <string name="watch_title">Montre</string>
+    <string name="watch_address">Dans le navigateur Internet de la montre :\n\n%1$s\n\nLa montre doit être connectée au point d\'accès de ce téléphone.</string>
+    <string name="hotspot_off">Point d\'accès éteint : active le point d\'accès mobile du téléphone et connectes-y la montre.\n\nPour ta sécurité, la montre n\'est servie que par le point d\'accès, jamais par un Wi-Fi partagé.</string>
+
+    <string name="off_track">⚠ Hors trace · %1$s m</string>
+    <string name="map_heading_up">Carte dans le sens de la marche</string>
+    <string name="map_north_up">Carte orientée nord</string>
+    <string name="buoy_on">Bouée activée</string>
+    <string name="buoy_off">Bouée désactivée</string>
+    <string name="no_track">Aucune trace chargée</string>
+    <string name="stop">Arrêter</string>
+    <string name="track_too_short">Trace trop courte, rien n\'a été enregistré</string>
+    <string name="track_saved">Trace enregistrée : %1$s km\nTéléchargements/BLRando/%2$s.gpx</string>
+    <string name="share">Partager</string>
+    <string name="track_subject">Trace %1$s</string>
+    <string name="share_track">Partager la trace</string>
+    <string name="no_track_in_file">Aucune trace trouvée dans ce fichier</string>
+    <string name="unreadable_file">Fichier illisible : %1$s</string>
+    <string name="track_loaded">Trace : %1$s</string>
+    <string name="remove_track_question">Retirer la trace de référence « %1$s » ?</string>
+    <string name="remove">Retirer</string>
+
+    <string name="battery_question">Pour que le GPS ne soit pas coupé pendant la rando, autorise BLRando à fonctionner sans restriction de batterie.</string>
+    <string name="location_always_question">Pour que la montre puisse démarrer le suivi téléphone en poche, choisis « Toujours autoriser » pour la localisation.</string>
+    <string name="location_needed">BLRando a besoin de la localisation pour afficher ta position</string>
+
+    <string name="notif_recording">● Enregistrement</string>
+    <string name="notif_buoy">Bouée active</string>
+    <string name="notif_watch">Montre connectée</string>
+    <string name="notif_location">Localisation</string>
+    <string name="watch_cannot_start">La montre ne peut pas démarrer le suivi : ouvre BLRando sur le téléphone</string>
+
+    <string name="update_title">Nouvelle version de BLRando</string>
+    <string name="update_text">La version %1$s est disponible (tu as la %2$s).</string>
+    <string name="update_now">Mettre à jour</string>
+    <string name="update_downloading">Téléchargement de la mise à jour…</string>
+    <string name="update_failed">Mise à jour impossible : %1$s</string>
+    <string name="unknown_error">erreur inconnue</string>
+
+    <string name="home_open_map">Ouvrir la carte</string>
+    <string name="home_bookmark">Ajoute cette page aux favoris d\'Internet pour la retrouver.</string>
+</resources>

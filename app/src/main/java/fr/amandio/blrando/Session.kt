@@ -41,8 +41,21 @@ object Session {
         private set
     /** Watch app open and talking to us: it needs the position, so GPS runs too. */
     var watchConnected = false
-    /** Watch screen on: map images are only drawn and sent then (battery). */
-    var watchScreenOn = true
+    /**
+     * Screen on/off of each watch page (key: id chosen by the page, see watch/link.js), and its last request.
+     * Several watches can share the phone (two hikers): images are drawn while at least one screen is on.
+     */
+    val watchScreens = java.util.concurrent.ConcurrentHashMap<String, Boolean>()
+    val watchPolls = java.util.concurrent.ConcurrentHashMap<String, Long>()
+
+    /** A watch screen is on: map images are only drawn and sent then (battery). True until a watch says otherwise. */
+    val watchScreenOn: Boolean
+        get() {
+            val now = System.currentTimeMillis()
+            // A page that stopped asking (closed, watch off), or never asked (adb tests), no longer counts
+            val live = watchScreens.filterKeys { id -> watchPolls[id]?.let { now - it < WatchFeed.GONE_MS } ?: false }
+            return live.isEmpty() || live.values.any { it }
+        }
 
     /** The GPS service must run while either switch is on, or while the watch app is open. */
     val active get() = guiding || recording || watchConnected
