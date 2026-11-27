@@ -105,4 +105,4 @@ For your privacy, the phone only talks to the watch through its own hotspot, nev
 
 ## For developers
 
-Building, releases and how it works: [docs/TECHNICAL.md](docs/TECHNICAL.md).
+Building, releases and how it works: [click here](docs/TECHNICAL.md).
